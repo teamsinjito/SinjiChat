@@ -1,0 +1,88 @@
+// Body
+html,body{height: 100%;}
+
+//media query
+$pc:1025;
+$pad:1024;
+$phone:767;
+:export {
+    phone:$phone;
+    pad:$pad;
+}
+@mixin pc {
+    @media(min-width: ($pc+"px")){@content;}
+}
+@mixin pad {
+    @media(max-width: ($pad+"px")){@content;}
+}
+@mixin phone {
+    @media(max-width: ($phone+"px")){@content;}
+}
+
+// Colors
+$blue: #3490dc;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66d9b;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+$white:#ffffff;
+$gray:#707070;
+$black:#333;
+$alpha: 0.9;
+.white_touka{
+    background-color: rgba($color:$white, $alpha: 0.9);
+}
+
+// Fonts
+@font-face {
+    font-family: 'myfont';   
+    src: url('/fonts/Harenosora.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'myfont-password';
+    src: url('/fonts/Baskerville-Regular.ttf') format('truetype');;
+}
+
+// Font Size
+.txt_XL{
+    @include pc{font-size: 41px;} //元80px
+    @include pad{font-size: 60px;}
+    @include phone{font-size: 30px;} //元40px
+}
+.txt_L{
+    @include pc{font-size: 22px;} //元30px
+    @include pad{font-size: 25px;}
+    @include phone{font-size: 20px;}
+}
+.txt_M{
+    @include pc{font-size: 20px;}
+    @include pad{font-size: 20px;}
+    @include phone{font-size: 16px;}
+}
+.txt_S{
+    @include pc{font-size: 20px;} //元23px
+    @include pad{font-size: 18px;}
+    @include phone{font-size: 14px;}
+}
+.txt_XS{
+    @include pc{font-size: 16px;} //元20px
+    @include pad{font-size: 15px;}
+    @include phone{font-size: 12px;} //元14px
+}
+.title_w{
+    @include pc{font-size: 75px;} //元100px
+    @include pad{font-size: 80px;}
+    @include phone{font-size: 40px;}
+}
+.title_B{
+    @include pc{font-size: 50px;} //元70px
+    @include pad{font-size: 70px;}
+    @include phone{font-size: 50px;}
+}
+

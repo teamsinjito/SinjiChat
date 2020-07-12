@@ -1,0 +1,12 @@
+.rodal,.rodal-dialog{
+    width: 100%!important;
+    height: 100%!important;
+    z-index: 1500!important;
+    
+}
+.rodal-door-enter{
+    animation-duration: 1500ms!important;
+}
+.rodal-door-leave,.rodal-fade-leave{
+    animation-duration: 1000ms!important;
+}

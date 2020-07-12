@@ -1,0 +1,105 @@
+.top-area{
+    display: flex;
+    flex-wrap: wrap;
+}
+.left-side{
+    // width: 100%;
+    font-family: 'myfont';
+    overflow: hidden;
+    position: relative;
+
+    @include pc{
+        height: 100%;
+    }
+    @include pad{
+        height: 70%;
+    }
+    @include phone{
+        height: 70%;
+    }
+
+    //タイトル
+    p{
+        position: absolute;
+        top: 55%;
+        opacity: 0;
+        animation  : slideAnime 5s ease infinite;
+    }
+
+    //背景
+    .bgImg{
+        position: absolute;
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 120%;
+        opacity    : 0;
+        animation  : bgAnime 20s linear infinite;
+    }
+    .src1{
+        @include pc{background-image: url("/img/Top(PC)1.jpg");}
+        @include pad{background-image: url("/img/Top(ipad)1.jpg");}
+        @include phone{background-image: url("/img/Top(iPhone)1.jpg");}      
+    }
+    .src2{
+        @include pc{background-image: url("/img/Top(PC)2.jpg");}
+        @include pad{background-image: url("/img/Top(ipad)2.jpg");}
+        @include phone{background-image: url("/img/Top(iPhone)2.jpg");} 
+        animation-delay: 5s;
+    }
+    .src3{
+        @include pc{background-image: url("/img/Top(PC)3.jpg");}
+        @include pad{background-image: url("/img/Top(ipad)3.jpg");}
+        @include phone{background-image: url("/img/Top(iPhone)3.jpg");} 
+        animation-delay: 15s;
+    }
+    .src4{
+        @include pc{background-image: url("/img/Top(PC)4.jpg");}
+        @include pad{background-image: url("/img/Top(ipad)4.jpg");}
+        @include phone{background-image: url("/img/Top(iPhone)4.jpg");} 
+        animation-delay: 10s;
+    }
+}
+
+@keyframes slideAnime{
+
+    0%  { left: 25% ;opacity: 0;}
+    12% { left: 10%; opacity: 1;}
+    38% { left: 10%; opacity: 1;}
+    50% { left: 10%; opacity: 1;}
+    75% { left: 10%; opacity: 1;}
+    100%{ left: -25%; opacity: 0;}
+}
+@keyframes bgAnime {
+    0% { opacity: 0; }
+    5% { opacity: 1; }
+    25% { opacity: 1; transform: translate3d(-50px, 0, 0);}
+    30% { opacity: 0; }
+    100% { opacity: 0; }
+}
+.pc-right-side{
+
+    @include pc{
+        display: block;
+    }
+    @include pad{
+        display: none;
+    }
+    @include phone{
+        display: none;
+    }
+
+}
+.phone-right-side{
+    height: 30%;
+    @include pc{
+        display: none;
+    }
+    @include pad{
+        display: block;
+    }
+    @include phone{
+        display: block;
+    }
+
+}

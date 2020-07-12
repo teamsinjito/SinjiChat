@@ -1,0 +1,83 @@
+.navi{
+    position: fixed!important;
+    top: 0px;
+    right: 0px;
+    z-index: 100;
+    padding-top: 0!important;
+    padding-left: 0!important;
+    padding-right: 0!important;
+    .nav-area{
+        padding-left: 15px;
+        padding-right: 15px;
+        // background-color: $white;
+    }
+}
+.visible-false.open-true{
+    @include pc{
+        transform: translate3d(100%, 0px, 0px)!important;
+        // display: none;
+    }
+}
+.visible-false{
+    @include pc{
+        transform: translate3d(100%, 0px, 0px)!important;
+    }
+    + div{
+        .bm-burger-button{
+            @include pc{
+                pointer-events: none;
+                animation: fadein-keyframes 0.3s ease 0s 1 forwards;
+            }
+        }
+        @keyframes fadein-keyframes {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                display: none;
+            }
+        }
+    }
+    
+}
+
+.bm-burger-button {
+    position: fixed;
+    width: 24px;
+    height: 20px;
+    right: 36px;
+    top: 36px;
+
+}
+.bm-burger-bars {
+    background:$black;
+    height: 10%!important;
+}
+.bm-cross-button {
+    position: fixed;
+    height: 24px;
+    width: 24px;
+    right: 36px!important;
+    top: 36px!important;
+    &:hover{
+        opacity: 0.8;
+    }
+}
+.bm-cross {
+    background:$black;
+}
+.bm-menu {
+    background-color: $white;
+}
+.bm-menu-wrap{
+    @include pc{
+        width: 25%!important;
+    }
+    @include pad{
+        width: 100%!important;
+    }
+    @include pad{
+        width: 100%!important;
+    }
+}

@@ -1,0 +1,29 @@
+.cp_iptxt {
+    position: relative;
+    width: 100%;
+}
+.cp_iptxt input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.3em;
+    transform: scale(0.8);
+    letter-spacing: 1px;
+    border: 0;
+    background-color:transparent;
+}
+.cp_iptxt input:focus {
+    outline: none;
+}
+.cp_iptxt input:focus::after {
+    outline: none;
+}
+.cp_iptxt::after {
+    display: block;
+    width: 100%;
+    height: 4px;
+    margin-top: -1px;
+    content: '';
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: $gray;
+}

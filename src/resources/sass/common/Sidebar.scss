@@ -1,0 +1,84 @@
+.sidebar-area{
+    text-align: center;
+    @include pc{
+        padding-top: 30%;
+    };
+    @include pad{
+        padding-top: 7%;
+        height: 93%;
+    };
+    @include phone{
+        padding-top: 10%;
+        height: 90%;
+    };
+    
+}
+
+.layout{
+    display: flex;
+    height: 100%;
+    @include pc{
+        flex-direction: column;
+    }
+    flex-wrap: wrap;
+    font-family: 'myfont';
+    .under{
+        @include pc{
+            margin-top: 15%;
+            width: 100%;
+            height: 100%;      
+            &:nth-of-type(5){display: block;}
+        }
+        @include pad{
+            width: 50%;
+            height: 50%;
+            &:nth-of-type(5){display: none;}
+        }
+        @include phone{
+            width: 50%;
+            height: 50%;
+            &:nth-of-type(5){display: none;}
+        }
+    }
+    .side{
+        margin-top: 15%;
+        width: 100%;
+    }
+    .menu{   
+
+        &:hover{
+            cursor: pointer;
+        }
+
+        span{
+            position: relative;
+            display: inline-block;
+            &::after{
+                position: absolute;
+                bottom: -4px;
+                left: 0;
+                content: '';
+                width: 100%;
+                height: 1px;
+                background: $black;
+                transform: scale(0, 1);
+                transform-origin: left top;
+                transition: transform .3s;
+            }
+            &:hover::after {
+                transform: scale(1, 1);
+            }
+        }
+    }
+
+
+}
+.layout-side{
+    @include pad{
+            height: 0;;
+    }
+    @include pad{
+        height: 0;;
+    }
+    
+}

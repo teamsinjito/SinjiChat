@@ -1,0 +1,25 @@
+.login-area{
+    background-image: url("/img/login.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    font-family: 'myfont';
+}
+
+.login-form{
+    position: relative;
+    .login-form-area{
+        position: absolute;
+        top: 20%;
+    }
+
+}
+.button-form{
+    display: flex;
+    justify-content: center;
+}
+#password,#password-confirm{
+    font-family: 'myfont-password';
+}

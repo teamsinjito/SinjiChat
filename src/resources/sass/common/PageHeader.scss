@@ -1,0 +1,18 @@
+.page-header{
+    text-align: center;
+    font-family: 'myfont';
+    font-style: italic;
+    
+
+    @include pc{padding-top: 2%;}
+    @include pad{padding-top: 4%;}
+    @include phone{padding-top: 5%;}
+}
+.page-sub-header{
+    text-align: center;
+    font-family: 'myfont';
+
+    @include pc{padding-top: 2%;}
+    @include pad{padding-top: 4%;}
+    @include phone{padding-top: 5%;}
+}
