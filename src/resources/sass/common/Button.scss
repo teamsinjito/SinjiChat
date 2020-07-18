@@ -1,0 +1,32 @@
+.button-common{
+    line-height: 3;
+    background-color: $gray;
+    border: none;
+    font-family: 'myfont';
+    color: $white;
+    &:hover{
+        opacity: .5;
+    }
+}
+.btn-lock{
+    opacity: .5;
+    pointer-events: none;
+}
+.fas{
+    padding-right: 5px;
+}
+.fa-spinner{
+    animation:0.5s linear infinite rotation1;
+    @keyframes rotation1{
+        0%{ transform:rotate(0);}
+        100%{ transform:rotate(360deg); }
+    }
+}
+.pc-show{
+    @include pad{display: none!important;}
+    @include phone{display: none!important;}
+}
+.pc-none{
+    @include pc{display: none!important;}
+    // @include phone{display: none;}
+}

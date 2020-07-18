@@ -37,6 +37,9 @@ $alpha: 0.9;
 .white_touka{
     background-color: rgba($color:$white, $alpha: 0.9);
 }
+.gray_touka{
+    background-color: rgba($color:$gray, $alpha: 0.5);
+}
 
 // Fonts
 @font-face {
@@ -74,6 +77,11 @@ $alpha: 0.9;
     @include pc{font-size: 16px;} //元20px
     @include pad{font-size: 15px;}
     @include phone{font-size: 12px;} //元14px
+}
+.txt_XXS{
+    @include pc{font-size: 12px;}
+    @include pad{font-size: 10px;}
+    @include phone{font-size: 8px;}
 }
 .title_w{
     @include pc{font-size: 75px;} //元100px
