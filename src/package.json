@@ -27,6 +27,7 @@
         "sass-loader": "^7.1.0"
     },
     "dependencies": {
+        "moment": "^2.27.0",
         "react-autosuggest": "^10.0.2",
         "react-burger-menu": "^2.7.0",
         "react-intersection-observer": "^8.26.2",

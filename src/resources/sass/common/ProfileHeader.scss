@@ -1,0 +1,11 @@
+.profile-header-txt{
+
+    font-family: 'myfont';
+    font-style: italic;
+
+}
+.header-line{
+    margin-left: 0!important;
+    @include pad{width: 100%!important;}
+    @include phone{width:100%!important;}
+}

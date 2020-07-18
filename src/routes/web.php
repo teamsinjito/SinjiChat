@@ -19,6 +19,10 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth'], function(){
+    Route::get('/get', 'HomeController@getMyRelationData');
     Route::get('AddFriend/get', 'AddFriendController@getAllUserWithOutFriend');
+    Route::post('AddFriend/post', 'AddFriendController@postRequest');
+    Route::get('Talk/get', 'TalkController@getAllFriend');
+    Route::post('Talk/post', 'TalkController@postRequest');
     Route::post('TimeLine/post', 'TimeLineController@tweetInsert');
 });

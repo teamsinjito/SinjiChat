@@ -29,6 +29,7 @@ export class SwipeToSlide extends Component {
             ]
         };
 
+        
         return(
             <div className="list-container">
                 <Slider {...settings}>
@@ -36,8 +37,8 @@ export class SwipeToSlide extends Component {
                     {this.props.list.map((list,index)=>
                     <React.Fragment key={index}>
                         {/* バイナリの場合デコードする */}
-                        {this.props.base64 ? <img src={`data:image/jpg;base64,${list.icon}`} alt='' onClick={this.props.open} className="w-100 pr-2 pl-2" id={list.id}/> :
-                        <img src={list.icon} alt='' onClick={this.props.open} className="w-100 pr-2 pl-2" id={list.id}/>}
+                        {this.props.base64 ? <img src={`data:image/jpg;base64,${list.icon}`} alt='' onClick={this.props.open} className="w-100 pr-2 pl-2" id={list.id} data-profile={list.profile} data-name={list.name} data-status={list.status}/> :
+                        <img src={list.icon} alt='' onClick={this.props.open} className="w-100 pr-2 pl-2" id={list.id} data-profile={list.profile} data-name={list.name} data-status={list.status}/>}
                         <p className="text-center txt_M list-txt">{list.name}</p>
                     </React.Fragment>
                     )}

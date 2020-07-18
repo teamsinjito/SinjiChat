@@ -5,11 +5,13 @@ import {Auto} from '../../Common/AutoSuggest';
 
 
 export class AddFriend extends React.Component{
-
+    
     constructor(){
         super();
         this.state={
-            list:[]
+            list:[],
+            menu:"AddFriend",
+            message:"Loading..."
         }
 
         axios
@@ -17,8 +19,9 @@ export class AddFriend extends React.Component{
             .then((res) => {
                 if(res.data.length > 0){
                     this.setState({list: res.data})
+                    console.log(this.state.list)
                 }else{
-                    this.setState({list: [{icon:'',name:"※ データが0件です",id:''}]})
+                    this.setState({message:"※ データが0件です"})
                 }
 
             })
@@ -27,12 +30,13 @@ export class AddFriend extends React.Component{
             })
     }
 
+
     render(){
         return(
             <div className="addfriend-area h-100">                 
                 <HeaderTitle title="Add-Friend"/>
                 <HeaderSubTitle title="人生を共に謳歌する最高の仲間を見つけよう"/>
-                {this.state.list.length > 0 ? <Auto list={this.state.list}/> : <em>Loading...</em>}
+        {this.state.list.length > 0 ? <Auto list={this.state.list} menu={this.state.menu}/> : <em>{this.state.message}</em>}
                 
             </div>
         );

@@ -26,6 +26,7 @@ export class MypageIndex extends Component {
             visible:false
         };
         this.closeModal = this.closeModal.bind(this);
+        this.handleTouchMove = this.handleTouchMove.bind(this);
     }
     openModal(e){
         const id = e.currentTarget.id;
@@ -45,12 +46,17 @@ export class MypageIndex extends Component {
         this.setState({visible: true});
         console.log(e.currentTarget.id);
         document.body.setAttribute('style', 'overflow: hidden;')
+        // document.addEventListener('touchmove', this.handleTouchMove, {passive: false});
     }  
     closeModal() {
         this.setState({visible: false});
+        this.setState({openDom:""}) 
         document.body.removeAttribute('style', 'overflow: hidden;')
+        // document.removeEventListener('touchmove', this.handleTouchMove, {passive: false});
     }
-
+    handleTouchMove(event) {
+        event.preventDefault();
+    }
     render(){
 
         return (

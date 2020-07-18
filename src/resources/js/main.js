@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect,useRef }  from 'react';
 import ReactDOM from 'react-dom';
 import {Brank} from './Common/Brank';
 import {TopIndex as Top} from './Top/index';
@@ -15,8 +15,53 @@ export default function Main() {
         threshold: 0
     });
 
-        
+    const [friendList,setFriendData]=useState([]);
+    const [talkList,setTalkData]=useState([]);
+
+    const refFriendList = useRef(friendList);
+    const refTalkList = useRef(talkList);
+    const [loading,updateLoad]=useState(true);
+
+    function sleep(milliseconds) {
+        return new Promise((resolve) => setTimeout(resolve, milliseconds));
+    }
+
+    async function main() {
+        // console.log('main')
+        for (let i = 0; i < 50; i++) {
+            // console.log('main loop')
+
+            axios
+                .get('/get')
+                .then((res) => {
+
+                    setFriendData(res.data.friend);
+                    setTalkData(res.data.talk);
+                    // console.log(refFriendList.current);
+                    // console.log(refTalkList.current);
+                    updateLoad(false);
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            await sleep(5000);
+        }
+    }
+
+    useEffect(() => {
+
+        refFriendList.current = friendList;
+        refTalkList.current = talkList;
+
+    }, [friendList,talkList]);
+
+    useEffect(() => {
+        main()
+    },[])
+
         return (
+            <>
+            {loading == false ?
             <>
                 <SideBarNav 
                     inView={(!inView).toString()}
@@ -24,13 +69,13 @@ export default function Main() {
                     outerContainerId={"App"}
                 />
                 <div id="page-wrap" className="h-100">
-
                     <Top innerref={ref}/>
-                    {/* <Brank /> */}
                     <Mypage />
-                    <Talk />
+                    <Talk list={refFriendList.current} talk={refTalkList.current}/>
                     <TimeLine />
                 </div>
+            </>:<em>loading</em>}
+
             </>
         );
     }
