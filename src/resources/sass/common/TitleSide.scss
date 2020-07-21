@@ -1,0 +1,9 @@
+.title-side-parent{
+    height: 100%;
+    position: relative;
+    margin-left: 10%;
+    .title-side-children{
+        position: absolute;
+        top:55%;
+    }
+}

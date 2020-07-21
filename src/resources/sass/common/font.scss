@@ -1,0 +1,36 @@
+//pc
+@media screen and (min-width:1025px){
+
+    .txt_XL{font-size: 80px};
+    .txt_L{font-size: 22px}; //元30px
+    .txt_M{font-size: 22px};
+    .txt_S{font-size: 23px};
+    .txt_XS{font-size: 20px};
+
+    .title_w{font-size: 75px}; //元100px
+    .title_B{font-size: 50px}; //元70px
+
+}
+// ipad
+@media screen and (max-width:1024px){
+    .txt_XL{font-size: 60px};
+    .txt_L{font-size: 25px};
+    .txt_M{font-size: 20px};
+    .txt_S{font-size: 18px};
+    .txt_XS{font-size: 15px};
+
+    .title_w{font-size: 80px};
+    .title_B{font-size: 70px};
+}
+
+//iphone
+@media screen and (max-width:767px){
+    .txt_XL{font-size: 40px};
+    .txt_L{font-size: 20px};
+    .txt_M{font-size: 16px};
+    .txt_S{font-size: 14px};
+    .txt_XS{font-size: 11px};
+
+    .title_w{font-size: 40px};
+    .title_B{font-size: 50px};
+}

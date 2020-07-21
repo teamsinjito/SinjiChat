@@ -1,0 +1,33 @@
+.react-autosuggest__container{
+    @include pc{
+        margin-top: 2%;
+        // margin-bottom: 3%;
+    }
+    @include pad{
+        margin-top: 10%;
+        margin-bottom: 8%;
+    }
+    @include phone{
+        margin-top:5%;
+        margin-bottom: 3%;
+    }
+    text-align: center;
+    .react-autosuggest__input{
+        font-family: 'myfont';
+        border-radius: 25px;
+        letter-spacing: 1px;
+
+        border: 1px solid $gray;
+        @include pc{width: 50%;}
+        @include pad{width: 80%;}
+        @include phone{width: 90%;}
+        height: 30px;
+        &:focus {
+            outline: none !important;
+            box-shadow: none;
+        }
+    }
+}
+.react-autosuggest__suggestions-list {
+    display: none;
+}

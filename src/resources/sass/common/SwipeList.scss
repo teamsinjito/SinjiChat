@@ -1,0 +1,44 @@
+.list-container{
+    width: 85%;
+    @include pc{
+        margin: 2% auto;
+    }
+    @include pad{
+        margin: 10% auto;
+        margin-bottom: 10%;
+    };
+    @include phone{
+        margin: 8% auto;
+        margin-bottom: 30%;
+    };
+
+    img{
+        opacity: 1;
+        -webkit-transition: .3s ease-in-out;
+        transition: .3s ease-in-out;
+        &:hover{
+            opacity: .5;
+        }
+    }
+}
+.list-txt{
+    font-family: 'myfont';
+}
+.slick-next:before, .slick-prev:before {
+    color: #000 !important;
+    // @include pad{
+    //     display: none;
+    // };
+    // @include phone{
+    //     display: none;
+    // };
+}
+.slick-prev:before {
+    content: '\03c' !important;
+}
+.slick-next:before {
+    content: '\03e' !important;
+}
+.slick-slide:hover{
+    cursor: pointer;
+}
