@@ -1,37 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Sidebar} from '../Common/Sidebar';
 import { slide as Menu } from 'react-burger-menu'
-import { render } from 'react-dom';
 
-export class SideBarNav extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            menuOpen: true
-        }
+export const SideBarNav = (props) => {
 
-        this.handleStateChange=this.handleStateChange.bind(this);  
-        }
-        
-        handleStateChange(state) {
-            this.setState({menuOpen:state.isOpen})
-        }
-
-    render(){
-
-        return(
+    const [menuOpen,setMenuOpen] = useState(true) //サイドバー表示フラグ
     
-                <Menu {...this.props} 
-                    className={`visible-${this.props.inView} open-${this.state.menuOpen}`} 
-                    right 
-                    noOverlay
-                    onStateChange={this.handleStateChange} 
-                    >
-                    <Sidebar  layouts="side"/>
-                </Menu>
-            
-        )
+    //サイドバー表示切替
+    function handleStateChange(state) {
+
+        setMenuOpen(state.isOpen)
+
     }
 
+    return(
 
+        <Menu {...props} 
+            className={`visible-${props.inView} open-${menuOpen}`} 
+            right 
+            noOverlay
+            onStateChange={handleStateChange} 
+            >
+            <Sidebar layouts="side"/>
+        </Menu>
+        
+    )
+    
 }

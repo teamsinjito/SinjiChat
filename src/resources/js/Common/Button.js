@@ -1,5 +1,5 @@
 import React from 'react';
-export function Button(props){
+export const Button =(props) => {
     let dom;
     if(props.btn[2]=='loading'){
         dom=(<><i className="fas fa-spinner"></i><span>{props.btn[0]}</span></>);

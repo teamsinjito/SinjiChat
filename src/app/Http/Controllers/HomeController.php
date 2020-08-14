@@ -42,21 +42,34 @@ class HomeController extends Controller
                 ->where('f.from_user_id','=',Auth::user()->id)
                 ->where('f.status','=',config('const.Request.FRIEND_STATUS.friend'));
             });
+            $friendListId2=DB::table('friend_lists as f2')
+            ->join('users as u2',function($join){
+                $join->on('u2.id','=','f2.to_user_id')
+                ->where('f2.from_user_id','=',Auth::user()->id)
+                ->where('f2.status','=',config('const.Request.FRIEND_STATUS.friend'));
+            });
+
+            //ルーム毎の未読メッセージ数取得new_messages
+            $unRead=DB::table('new_messages as t3')
+                    ->groupBy('t3.room_id','t3.read_flg','t3.to_user_id')
+                    ->having('t3.to_user_id','=',Auth::user()->id)
+                    ->having('t3.read_flg','=',0)
+                    ->select('t3.room_id',DB::raw('count(t3.read_flg) as new'));
 
             //友達リストを抽出
-            $friendList=$friendListId
-            ->select('u.icon','u.name','f.room_id as id','u.profile','f.status')
+            $friendList=$friendListId2->leftjoinSub($unRead,'ur',function($join){
+                $join->on('f2.room_id','=','ur.room_id');
+            })
+            ->select('u2.icon','u2.name','f2.room_id as id','u2.profile','f2.status','ur.new')
             ->get();
 
             //友達とのトークリストを抽出
             $talkList=$friendListId->rightjoin('talks as t',function($join){
                 $join->on('f.room_id','=','t.room_id');
             })
-            ->select('t.room_id','t.message','t.image',DB::raw("CASE WHEN t.from_user_id =".Auth::user()->id." THEN 0 ELSE ".'t.from_user_id END'),'u.icon','u.profile','t.created_at')
+            ->select('t.room_id','t.message','t.image',DB::raw("CASE WHEN t.from_user_id =".Auth::user()->id." THEN 0 ELSE ".'t.from_user_id END'),'u.icon','u.profile','t.read_flg','t.created_at')
             ->orderBy('t.created_at')
             ->get();
-
-            
 
             return Response::json([
                 'friend'=>$friendList,
