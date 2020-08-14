@@ -1,67 +1,47 @@
-import React, { useState, useEffect,useRef }  from 'react';
+import React, { useState, useContext,useRef }  from 'react';
+import { useInView } from "react-intersection-observer";
+import useInterval from 'use-interval';
 import ReactDOM from 'react-dom';
-import {Brank} from './Common/Brank';
 import {TopIndex as Top} from './Top/index';
 import {MypageIndex as Mypage} from './Mypage/index';
 import {TalkIndex as Talk} from './Talk/index';
 import {TimeLineIndex as TimeLine} from './TimeLine/index';
 import {RequestIndex as Request} from './Request/index';
-import { useInView } from "react-intersection-observer";
 import {SideBarNav} from './Nav/SideBarNav';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-export default function Main() {
+import {Store,Provider} from './components/store'
 
-    const [ref, inView,entry] = useInView({
+const MainArea=()=>{
+    
+    const {state, dispatch} = useContext(Store) 
+    const [ref, inView] = useInView({
         threshold: 0
     });
 
-    const [friendList,setFriendData]=useState([]);
-    const [talkList,setTalkData]=useState([]);
+    useInterval(()=>{
 
-    const refFriendList = useRef(friendList);
-    const refTalkList = useRef(talkList);
-    const [loading,updateLoad]=useState(true);
+        axios
+            .get('/get')
+            .then((res) => {
+                        
+                dispatch({type:'GET_INTERVAL_DATA',payload:res.data})
+                console.log(state)
 
-    function sleep(milliseconds) {
-        return new Promise((resolve) => setTimeout(resolve, milliseconds));
-    }
+            })
+            .catch(error => {
+                dispatch({type:'ERROR_SELECT_MYFRIENDS'})
+                return state
+            })
 
-    async function main() {
-        // console.log('main')
-        for (let i = 0; i < 50; i++) {
-            // console.log('main loop')
+            
+            
+    },5000)
 
-            axios
-                .get('/get')
-                .then((res) => {
-
-                    setFriendData(res.data.friend);
-                    setTalkData(res.data.talk);
-                    // console.log(refFriendList.current);
-                    // console.log(refTalkList.current);
-                    updateLoad(false);
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-            await sleep(5000);
-        }
-    }
-
-    useEffect(() => {
-
-        refFriendList.current = friendList;
-        refTalkList.current = talkList;
-
-    }, [friendList,talkList]);
-
-    useEffect(() => {
-        main()
-    },[])
-
-        return (
-            <>
-            {loading == false ?
+    return (
+        <>
+        {state.intervalGetData.firstLoadFlg == false ?
             <>
                 <SideBarNav 
                     inView={(!inView).toString()}
@@ -71,17 +51,24 @@ export default function Main() {
                 <div id="page-wrap" className="h-100">
                     <Top innerref={ref}/>
                     <Mypage />
-                    <Talk list={refFriendList.current} talk={refTalkList.current}/>
+                    <Talk />
                     <TimeLine />
                 </div>
-            </>:<em>loading</em>}
+            </>:<em>loading</em>}   
+        </>
+    );
+}
 
-            </>
-        );
-    }
+const Main=()=> {
 
+    return(
 
-// export default Index;
+        <Provider>
+            <MainArea />
+        </Provider>
+
+    )
+}
 
 if (document.getElementById('home-id')) {
     ReactDOM.render(<Main />, document.getElementById('home-id'));

@@ -1,11 +1,10 @@
 import React, { forwardRef } from 'react';
-import ReactDOM from 'react-dom';
 import {Title} from '../Common/Title';
 import {Sidebar} from '../Common/Sidebar';
 import {Underbar} from './Underbar';
 
 
-export function TopIndex(props){
+export const TopIndex = (props) => {
 
         return (
             
