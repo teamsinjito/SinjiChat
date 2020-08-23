@@ -31,4 +31,5 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('Talk/imagePost', 'TalkController@imagePostRequest');
     Route::post('Talk/upDateReadFlg', 'TalkController@upDateReadFlg');
     Route::post('TimeLine/post', 'TimeLineController@tweetInsert');
+    Route::post('TimeLine/get','TimeLineController@getTweetData');
 });
