@@ -41,6 +41,7 @@ export class Tweet extends React.Component{
             errorLavelText:"",
             errorLavelImage:"",
             selectedValue: 'text',
+            // selectedMenu:'text',
         }
     }
 
@@ -106,6 +107,7 @@ export class Tweet extends React.Component{
     handleChange(value) {
         console.log(value);
         this.setState({selectedValue: value});
+        // this.setState({selectedMenu: value});
 
         //選択した値によって表示項目を切り替える
         if(value == "text"){
@@ -160,7 +162,7 @@ export class Tweet extends React.Component{
                         </div>
                     </div>
 
-                    <div id="canvas-area" className="col-xl-4 col-10 canvas-area p-0  phone-layout">   
+                    <div id="canvas-area" className="col-xl-4 col-10 canvas-area-tweet p-0  phone-layout">   
                         <FileInputComponent
                             labelStyle={{display:"none"}}//ラベルは不要なので非表示にする
                             imageStyle={{height:"100%"}}//プレビュー画像に付与するスタイル情報
@@ -198,11 +200,23 @@ export class Tweet extends React.Component{
                 {/* 送信ボタンとエラーラベル */}
                 <div className="col-xl-4 col-12 pc-none">
                     {/* ラジオボタン(スマホ時入力項目切替用) */}
+
                     <RadioGroup className="changeRadio" selectedValue={this.state.selectedValue} onChange={this.handleChange}>
                         <Radio value="text" />本文
                         <Radio value="image" />画像
                     </RadioGroup>
-                    
+
+                    {/* <div className="offset-3 col-6 p-0 mt-3">
+                    <RadioGroup Component="radio-group" className="changeRadio" selectedValue={this.state.selectedValue} onChange={this.handleChange}>
+                        <label className={`radio-mark mark-profile-${this.state.selectedMenu}`}>
+                            <Radio value="text"/>本文
+                        </label>
+                        <label className={`radio-mark mark-image-${this.state.selectedMenu}`}>
+                            <Radio value="image"/>画像
+                        </label>
+                    </RadioGroup>
+                    </div> */}
+
                     {/* エラーメッセージラベル */}
                     <div id="errorLabelText" className="error-message">{this.state.errorLavelText}</div>
                     <div id="errorLabelImage" className="error-message">{this.state.errorLavelImage}</div>

@@ -16,7 +16,7 @@
 .input-area{
   height:550px;
 }
-.canvas-area{
+.canvas-area-tweet{
   height:554px;
   position:relative;
   border: 1px solid $black !important;
@@ -71,4 +71,13 @@
   text-align: center;
   font-family: 'myfont';
   color: $red;
+}
+
+.radio-mark{
+  &:after{
+    margin-top: 2px; /* チェック枠の位置 */
+}
+&:before{
+    margin-top: 2px; /* チェックマークの位置 */
+}
 }
