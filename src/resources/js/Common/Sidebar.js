@@ -12,7 +12,7 @@ export const Sidebar = (props) => {
         <div className="sidebar-area">
             {/* ヘッダー独自タグ */}
             <SideBarTitle />
-            <hr className="mt-5"></hr>
+            <hr className="mt-5 text-center"></hr>
             {/* タグ */}
             <Router>
                 <Layout layouts={props.layouts}>    

@@ -91,7 +91,7 @@ export const AddFriendProfile = (props) => {
         
         <div className="container form-group mt-5">
             <div className="row">
-                <div className="col-xl-7 col-12">    
+                <div className="col-xl-8 col-12">    
                     <ProfileHeader title="Profile"/>
                     <ProfileTxtLabel label={userData('name')}/>
                     <ProfileTxtLabel label={userData('profile')}/>
@@ -100,7 +100,7 @@ export const AddFriendProfile = (props) => {
                         <Button btn={btn} onclick={requestFriend}/>
                     </div>
                 </div>
-                <div className="col-xl-5 col-12">
+                <div className="col-xl-4 col-12">
                     <img src={`data:image/jpg;base64,${userData('icon')}`} className="w-100"/>
                 </div>
             </div>

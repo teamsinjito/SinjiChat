@@ -8,10 +8,13 @@ const initialState={
 
         myChatHistory:[], //チャット履歴
         myFriendList:[], //友達リスト
+        request:[], //友達申請、グループ申請
         firstLoadFlg:true, //初期表示ローディングフラグ
     },
     
-    allUser:[],//全ユーザリスト
+    allUser:[],//全ユーザリスト AddFriend用
+
+    allMyFriend:[], //全友達リスト　AddGroup用
 
     postFlg:false, //データ送信中フラグ
 

@@ -2,8 +2,9 @@ import React, { useContext,useState } from 'react';
 import {PageHeaderTitle as HeaderTitle,PageHeaderSubTitle as HeaderSubTitle} from '../Common/PageHeader';
 import Slider from "react-slick";
 import ImageList from'../Common/ImageList';
-import {AddFriend} from './AddFriend/AddFriend'
-import {Tweet} from './Tweet/Tweet'
+import {AddGroup} from './AddGroup/AddGroup';
+import {AddFriend} from './AddFriend/AddFriend';
+import {Tweet} from './Tweet/Tweet';
 import Rodal from 'rodal';
 
 import {Store,Provider} from '../components/store'
@@ -31,7 +32,7 @@ export const MypageIndex = () => {
         if(id=="menu1"){
             setDom(<Tweet/>)
         }else if(id=="menu2"){
-            setDom(<AddFriend/>)
+            setDom(<AddGroup/>)
         }else if(id=="menu3"){
             setDom(<AddFriend/>)
         }else if(id=="menu4"){
@@ -84,7 +85,7 @@ export const MypageIndex = () => {
                 visible={view}
                 onClose={closeModal}
                 animation="door"
-                className="modal-area"
+                className="modal2-area"
                 >
                 {openDom}
             </Rodal>

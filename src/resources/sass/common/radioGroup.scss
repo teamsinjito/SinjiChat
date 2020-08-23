@@ -1,0 +1,49 @@
+radio-group{
+    display: flex;
+    justify-content: space-around;
+}
+
+.visibleProfile-profile,.visibleImage-image{
+    @include phone{display: block;}
+}
+.visibleImage-profile,.visibleProfile-image{
+    @include phone{display: none;}
+}
+input[type=radio]{
+    display: none;
+}
+
+.radio-mark{
+    position: relative; /* ボックスの位置を指定する */
+    padding: 0 0 0 42px; /* ボックス内側の余白を指定する */
+    &:after{
+        position: absolute; /* ボックスの位置を指定する */
+        content: ""; /* ボックスのコンテンツ */
+        display: block; /* ブロックレベル要素化する */
+        top: 50%; /* 上部から配置の基準位置を決める */
+        left: 15px; /* 左から配置の基準位置を決める */
+        margin-top: -10px; /* チェック枠の位置 */
+        width: 16px; /* ボックスの横幅を指定する */
+        height: 16px; /* ボックスの高さを指定する */
+        border: 2px solid $gray; /* ボックスの境界線を実線で指定する */
+        border-radius: 50%; /* ボックスの角丸を指定する */
+    }
+    &:before{
+        position: absolute; /* ボックスの位置を指定する */
+        content: "";
+        display: block; /* ブロックレベル要素化する */
+        left: 15px; /* 左から配置の基準位置を決める */
+        margin-top: -10px; /* チェックマークの位置 */
+        width: 16px; /* ボックスの横幅を指定する */
+        height: 16px; /* ボックスの高さを指定する */
+        background: $gray;/* ボックスの背景色を指定する */
+        border-radius: 50%; /* ボックスの角丸を指定する */
+        opacity: 0; /* 要素を透過指定する */
+    }
+}
+
+.mark-profile-profile,.mark-image-image{
+    &:before{
+        opacity: 1;
+    }
+}

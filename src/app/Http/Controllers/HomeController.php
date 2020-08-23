@@ -71,9 +71,32 @@ class HomeController extends Controller
             ->orderBy('t.created_at')
             ->get();
 
+            //友達申請およびグループ申請のリクエストを取得
+            $friendRequest=DB::table('friend_lists as f3')
+            ->join('users as u3',function($join){
+                $join->on('u3.id','=','f3.from_user_id')
+                ->where('f3.to_user_id','=',Auth::user()->id)
+                ->where('f3.status','=',config('const.Request.FRIEND_STATUS.success'));
+            })
+            ->select('f3.room_id','u3.name','u3.profile','u3.icon','f3.created_at',DB::raw("'Friend' as requesttype"));
+
+            $groupRequest=DB::table('group_lists as gl')
+            ->join('groups as g',function($join){
+                $join->on('g.id','=','gl.group_id')
+                ->where('gl.to_user_id','=',Auth::user()->id)
+                ->where('gl.status','=',config('const.Request.GROUP_STATUS.success'));
+            })
+            ->select('gl.room_id','g.name','g.profile','g.icon','gl.created_at',DB::raw("'Group' as requesttype"));
+
+
+            $friendAndGroupRequest=$friendRequest->union($groupRequest)
+                                    ->orderBy('created_at','DESC')
+                                    ->get();
+
             return Response::json([
                 'friend'=>$friendList,
                 'talk'=>$talkList,
+                'request'=>$friendAndGroupRequest,
                 'me'=>Auth::user()->id
             ]);
 
