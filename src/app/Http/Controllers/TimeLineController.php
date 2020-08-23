@@ -27,37 +27,35 @@ class TimeLineController extends Controller
         $image->resize(368,554);
         $image->stream('jpg');
 
-        //return(STATUSCODE[2]);
-        return("data:image/jpeg;base64,".base64_encode($image));
         }
         catch(\Exception $e){
             var_dump($e->messege);
         }
 
-        //トランザクション開始
-        // DB::beginTransaction();
+        // トランザクション開始
+        DB::beginTransaction();
         
-        // try{
+        try{
             
-        //     //DB登録
-        //     $time_lines = TimeLine::create([
-        //         'user_id'=>Auth::user()->id,
-        //         'message'=>$request->message,
-        //         'image'=>"data:image/jpeg;base64,".base64_encode($image)
-        //     ]);
+            //DB登録
+            $time_lines = TimeLine::create([
+                'user_id'=>Auth::user()->id,
+                'message'=>$request->message,
+                'image'=>"data:image/jpeg;base64,".base64_encode($image)
+            ]);
             
-        //     //コミット
-        //     DB::commit();
+            //コミット
+            DB::commit();
             
-        //     //ボタン表示変更用コード返却
-        //     return(STATUSCODE[2]);
+            //ボタン表示変更用コード返却
+            return(STATUSCODE[2]);
             
-        // }catch(\Exception $e){
-        //     //エラー時ロールバック
-        //     DB::rollback();
+        }catch(\Exception $e){
+            //エラー時ロールバック
+            DB::rollback();
             
-        //     //ボタン表示変更用コード返却
-        //     return(STATUSCODE[3]);
-        // }
+            //ボタン表示変更用コード返却
+            return(STATUSCODE[3]);
+        }
     }
 }
