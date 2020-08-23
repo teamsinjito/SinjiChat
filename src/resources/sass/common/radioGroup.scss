@@ -1,6 +1,9 @@
 radio-group{
     display: flex;
     justify-content: space-around;
+    input[type=radio]{
+        display: none;
+    }
 }
 
 .visibleProfile-profile,.visibleImage-image{
