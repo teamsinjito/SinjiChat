@@ -4,25 +4,33 @@ import axios from "axios";
 import {InputFilterTxt} from '../../Common/InputTxt';
 import ImageList from '../../Common/ImageList';
 import Slider from "react-slick";
-import {AddFriendProfile} from './Profile';
+import {AddGroupProfile} from './Profile';
+import {LabelButton} from '../../Common/Button';
 import Rodal from 'rodal';
 
 import {Store,Provider} from '../../components/store'
 
-export const AddFriend = () => {
-    
+export const AddGroup = () => {
+
     const {state, dispatch} = useContext(Store)　//store参照
     const [value,setValue] = useState("")  //テキストボックス入力値
     const [view,setView] =useState(false)
     const [openDom,setDom]=useState("") //プロフィール画面DOM
     const [message,setMessage] =useState('Loading...')
+    const [selectUserId,setSelectUserId] = useState([])
+    // const button=[['次へ','btn-lock','none'],
+    //                 ['次へ','btn-active','none']];
+    const button=[['Make Profile','btn-lock'],
+                    ['Make Profile','btn-active']];
+    const [btn,setButton] = useState(button[0])
+    var selectedUser=[];
 
     useEffect(() => {
         axios
-            .get('/AddFriend/get')
+            .get('/AddGroup/get')
             .then((res) => {
                 if(res.data.length > 0){
-                    dispatch({type:'GET_ALL_USER_LIST',payload:res.data})
+                    dispatch({type:'GET_ALL_MY_FRIEND_LIST',payload:res.data})
 
                 }else{
                     setMessage('※ データが0件です')
@@ -34,26 +42,66 @@ export const AddFriend = () => {
             })
 
     },[]);
-    
-    //ユーザプロフィール表示
+
+    useEffect(() => {
+
+        if(state.allMyFriend.length > 0){
+
+            state.allMyFriend.map((output,index)=>{
+
+                if(output.checked){
+
+                    selectedUser.push(output.id)
+
+                }
+            })
+
+            setSelectUserId(selectedUser);
+
+            if(selectedUser.length > 0){
+
+                setButton(button[1])
+
+            }else{
+
+                setButton(button[0])
+
+            }
+        }
+
+    },[state.allMyFriend]);
+
+    function selectUser(e){
+
+        const id = e.currentTarget.attributes.getNamedItem('data-id').value
+
+        const listCopy = state.allMyFriend.map((output,index)=>{
+
+            if(output.id == id){
+
+                output.checked=!output.checked
+            }
+            return output;
+        })
+
+        dispatch({type:'GET_ALL_MY_FRIEND_LIST',payload:listCopy})
+    }
+    //トーク表示
     function openModal(e){
 
         document.body.setAttribute('style', 'overflow: hidden;');
         //Domを構築
-        setDom(<AddFriendProfile 
-            index={e.currentTarget.attributes.getNamedItem('data-index').value}
-            />
-        )
-        //ユーザプロフィール表示
+        setDom(<AddGroupProfile selected={selectUserId}/>)
+        //トーク画面表示
         setView(true);
     }
 
-    //ユーザプロフィール非表示
+    //トーク画面非表示
     function closeModal(){
 
         document.body.removeAttribute('style', 'overflow: hidden;')
         setDom("")
-        //ユーザプロフィール非表示
+        //トーク画面非表示
         setView(false);
 
     }
@@ -61,9 +109,9 @@ export const AddFriend = () => {
     return(
         <Fragment>
             <div className="addfriend-area h-100">                 
-                <HeaderTitle title="Add-Friend"/>
-                <HeaderSubTitle title="人生を共に謳歌する最高の仲間を見つけよう"/>
-                {state.allUser.length > 0 ?
+                <HeaderTitle title="Add-Group"/>
+                <HeaderSubTitle title="グループに追加する友達を選びましょう"/>
+                {state.allMyFriend.length > 0 ?
 
                     <Fragment>
                         {/* テキストボックス */}
@@ -72,15 +120,16 @@ export const AddFriend = () => {
                             onChange={()=>setValue(event.target.value)}
                         />
                         {/* 友達リスト */}
-                        <div className="list-container">
+                        <div className="list-container mb-0">
                             <Slider {...state.swipeSetting}>
-                            {state.allUser.filter(listFilter => listFilter.name.includes(value)).map((list,index)=>
+                            {state.allMyFriend.filter(listFilter => listFilter.name.includes(value)).map((list,index)=>
                                 <ImageList 
                                     listElement={list} 
-                                    menu='AddFriend' 
+                                    menu='AddGroup' 
                                     key={index}
                                     index={index}
-                                    onClick={openModal}
+                                    onClick={selectUser}
+                                    selectImageFlg={false}
                                 />
                             )}
                             </Slider>
@@ -88,6 +137,11 @@ export const AddFriend = () => {
                     </Fragment>
                 : <em>{message}</em>
                 }
+                <div className="row">
+                    <div className="offset-8 col-4 offset-sm-10 col-sm-2 p-0">
+                        <LabelButton btn={btn} onclick={openModal}/>
+                    </div>
+                </div>
             </div>
 
             {/* プロフィール画面 */}
@@ -95,11 +149,10 @@ export const AddFriend = () => {
                 visible={view}
                 onClose={closeModal}
                 animation="slideUp"
-                className="modal2-area flex-area"
+                className="modal-area flex-area"
             >
                 {openDom}
             </Rodal>
         </Fragment>
     );
-    
 }

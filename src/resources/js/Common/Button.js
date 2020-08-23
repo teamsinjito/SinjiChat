@@ -16,3 +16,9 @@ export const Button =(props) => {
         </div>
     );
 }
+
+export const LabelButton = (props) =>{
+    return(
+        <em className={`labelButton-common txt_XS ${props.btn[1]}`} onClick={props.onclick}>{props.btn[0]} <i className="fas fa-arrow-right"></i></em>
+    )
+}

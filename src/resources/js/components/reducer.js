@@ -9,6 +9,7 @@ const reducer = (state = {}, action={}) => {
                         ...state.intervalGetData,
                         myFriendList:action.payload.friend,
                         myChatHistory:action.payload.talk,
+                        request:action.payload.request,
                         firstLoadFlg:false
                     }
                 }
@@ -18,6 +19,12 @@ const reducer = (state = {}, action={}) => {
             return{
                 ...state,
                 allUser:action.payload
+            }
+
+        case 'GET_ALL_MY_FRIEND_LIST':
+            return{
+                ...state,
+                allMyFriend:action.payload
             }
 
         case 'LOOK_AHEAD':

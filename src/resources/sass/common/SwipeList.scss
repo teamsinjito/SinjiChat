@@ -24,6 +24,32 @@
 .list-txt{
     font-family: 'myfont';
 }
+.user-list{
+    @include phone{
+        width: 80%;
+        margin: auto;
+    }
+}
+.add-group-list{
+    position: relative;
+    .selected-message-wrapper{
+        position: absolute;
+        text-align: center;
+        top:50%;
+        .selected-message{
+            font-family: 'myfont';
+        }
+    }
+    .select-image-false{
+        display: none;
+    }
+    .select-image-true{
+        display: block;
+    }
+    .img-opacity-true{
+        opacity: .5;
+    }
+}
 .slick-next:before, .slick-prev:before {
     color: #000 !important;
     // @include pad{

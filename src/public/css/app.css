@@ -849,6 +849,10 @@ html, body {
   overflow-y: scroll;
 }
 
+.flex-area .rodal-dialog {
+  align-items: center;
+}
+
 .rodal-door-enter, .rodal-slideUp-enter {
   -webkit-animation-duration: 1500ms !important;
           animation-duration: 1500ms !important;
@@ -859,55 +863,247 @@ html, body {
           animation-duration: 1000ms !important;
 }
 
+.rodal-slideRight-enter {
+  -webkit-animation-duration: 2000ms !important;
+          animation-duration: 2000ms !important;
+}
+
+.rodal-slideRight-leave {
+  -webkit-animation-duration: 2000ms !important;
+          animation-duration: 2000ms !important;
+}
+
 .rodal-close {
   z-index: 100;
 }
 
-.input-fitler-txt-container {
+.canvas-area {
+  height: 100%;
+  position: relative;
+  border: 1px solid #707070 !important;
+}
+@media (max-width: 767px) {
+  .canvas-area {
+    width: 80%;
+    margin: auto;
+  }
+}
+.canvas-area input {
+  z-index: 10;
+}
+.canvas-area .img-wrapper {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.canvas-area .img-wrapper .img-block {
   text-align: center;
+  width: 100%;
+}
+.canvas-area .img-wrapper .img-block .inputImg {
+  width: 25%;
+}
+.canvas-area .img-wrapper .img-block .inputImg:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+.canvas-area .canvas-inner-wrapper {
+  position: absolute;
+  top: 0px;
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+}
+
+radio-group {
+  display: flex;
+  justify-content: space-around;
+}
+
+@media (max-width: 767px) {
+  .visibleProfile-profile, .visibleImage-image {
+    display: block;
+  }
+}
+
+@media (max-width: 767px) {
+  .visibleImage-profile, .visibleProfile-image {
+    display: none;
+  }
+}
+
+input[type=radio] {
+  display: none;
+}
+
+.radio-mark {
+  position: relative;
+  /* ボックスの位置を指定する */
+  padding: 0 0 0 42px;
+  /* ボックス内側の余白を指定する */
+}
+.radio-mark:after {
+  position: absolute;
+  /* ボックスの位置を指定する */
+  content: "";
+  /* ボックスのコンテンツ */
+  display: block;
+  /* ブロックレベル要素化する */
+  top: 50%;
+  /* 上部から配置の基準位置を決める */
+  left: 15px;
+  /* 左から配置の基準位置を決める */
+  margin-top: -10px;
+  /* チェック枠の位置 */
+  width: 16px;
+  /* ボックスの横幅を指定する */
+  height: 16px;
+  /* ボックスの高さを指定する */
+  border: 2px solid #707070;
+  /* ボックスの境界線を実線で指定する */
+  border-radius: 50%;
+  /* ボックスの角丸を指定する */
+}
+.radio-mark:before {
+  position: absolute;
+  /* ボックスの位置を指定する */
+  content: "";
+  display: block;
+  /* ブロックレベル要素化する */
+  left: 15px;
+  /* 左から配置の基準位置を決める */
+  margin-top: -10px;
+  /* チェックマークの位置 */
+  width: 16px;
+  /* ボックスの横幅を指定する */
+  height: 16px;
+  /* ボックスの高さを指定する */
+  background: #707070;
+  /* ボックスの背景色を指定する */
+  border-radius: 50%;
+  /* ボックスの角丸を指定する */
+  opacity: 0;
+  /* 要素を透過指定する */
+}
+
+.mark-profile-profile:before, .mark-image-image:before {
+  opacity: 1;
+}
+
+.input-txt-container {
+  position: relative;
+}
+.input-txt-container .input-txt {
+  font-family: "myfont";
+  letter-spacing: 1px;
+  border: 1px solid #707070;
+}
+.input-txt-container .input-txt:focus {
+  outline: none !important;
+  box-shadow: none;
+}
+.input-txt-container .name-txt {
+  height: 30px;
+  -webkit-appearance: none;
+  border-radius: 0;
 }
 @media (min-width: 1025px) {
-  .input-fitler-txt-container {
+  .input-txt-container .name-txt {
+    width: 75%;
+  }
+}
+@media (max-width: 1024px) {
+  .input-txt-container .name-txt {
+    width: 80%;
+  }
+}
+@media (max-width: 767px) {
+  .input-txt-container .name-txt {
+    width: 100%;
+  }
+}
+.input-txt-container .profile-txt {
+  resize: none;
+  height: 80px;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+@media (min-width: 1025px) {
+  .input-txt-container .profile-txt {
+    width: 75%;
+  }
+}
+@media (max-width: 1024px) {
+  .input-txt-container .profile-txt {
+    width: 80%;
+  }
+}
+@media (max-width: 767px) {
+  .input-txt-container .profile-txt {
+    width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .input-txt-container .profile-txt {
+    height: 170px !important;
+  }
+}
+.input-txt-container .input-filter-txt {
+  height: 30px;
+  border-radius: 25px;
+}
+@media (min-width: 1025px) {
+  .input-txt-container .input-filter-txt {
+    width: 50% !important;
+  }
+}
+@media (max-width: 1024px) {
+  .input-txt-container .input-filter-txt {
+    width: 80% !important;
+  }
+}
+@media (max-width: 767px) {
+  .input-txt-container .input-filter-txt {
+    width: 90% !important;
+  }
+}
+.input-txt-container .error-txt {
+  font-family: "myfont";
+  color: #e3342f;
+  position: absolute;
+}
+
+@media (min-width: 1025px) {
+  .input-filter-margin {
     margin-top: 2%;
   }
 }
 @media (max-width: 1024px) {
-  .input-fitler-txt-container {
+  .input-filter-margin {
     margin-top: 10%;
     margin-bottom: 8%;
   }
 }
 @media (max-width: 767px) {
-  .input-fitler-txt-container {
+  .input-filter-margin {
     margin-top: 5%;
     margin-bottom: 3%;
   }
 }
-.input-fitler-txt-container .input-fitler-txt {
-  font-family: "myfont";
-  border-radius: 25px;
-  letter-spacing: 1px;
-  border: 1px solid #707070;
-  height: 30px;
-}
-@media (min-width: 1025px) {
-  .input-fitler-txt-container .input-fitler-txt {
-    width: 50%;
-  }
-}
-@media (max-width: 1024px) {
-  .input-fitler-txt-container .input-fitler-txt {
-    width: 80%;
-  }
+
+.input-margin {
+  margin-top: 10%;
+  margin-bottom: 10%;
 }
 @media (max-width: 767px) {
-  .input-fitler-txt-container .input-fitler-txt {
-    width: 90%;
+  .input-margin {
+    margin-top: 10%;
+    margin-bottom: 10%;
   }
-}
-.input-fitler-txt-container .input-fitler-txt:focus {
-  outline: none !important;
-  box-shadow: none;
 }
 
 .button-common {
@@ -918,6 +1114,15 @@ html, body {
   color: #ffffff;
 }
 .button-common:hover {
+  opacity: 0.5;
+}
+
+.labelButton-common {
+  font-family: "myfont";
+  color: #333;
+}
+.labelButton-common:hover {
+  cursor: pointer;
   opacity: 0.5;
 }
 
@@ -951,11 +1156,6 @@ html, body {
   }
 }
 
-@media (max-width: 1024px) {
-  .pc-show {
-    display: none !important;
-  }
-}
 @media (max-width: 767px) {
   .pc-show {
     display: none !important;
@@ -965,6 +1165,16 @@ html, body {
 @media (min-width: 1025px) {
   .pc-none {
     display: none !important;
+  }
+}
+@media (max-width: 1024px) {
+  .pc-none {
+    display: none !important;
+  }
+}
+@media (max-width: 767px) {
+  .pc-none {
+    display: block !important;
   }
 }
 
@@ -1006,9 +1216,6 @@ hr {
   width: 80%;
 }
 
-.sidebar-area {
-  text-align: center;
-}
 @media (min-width: 1025px) {
   .sidebar-area {
     padding-top: 30%;
@@ -1175,6 +1382,34 @@ hr {
 
 .list-txt {
   font-family: "myfont";
+}
+
+@media (max-width: 767px) {
+  .user-list {
+    width: 80%;
+    margin: auto;
+  }
+}
+
+.add-group-list {
+  position: relative;
+}
+.add-group-list .selected-message-wrapper {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+}
+.add-group-list .selected-message-wrapper .selected-message {
+  font-family: "myfont";
+}
+.add-group-list .select-image-false {
+  display: none;
+}
+.add-group-list .select-image-true {
+  display: block;
+}
+.add-group-list .img-opacity-true {
+  opacity: 0.5;
 }
 
 .slick-next:before, .slick-prev:before {

@@ -1,0 +1,66 @@
+.input-txt-container{
+
+    position: relative;
+    .input-txt{
+        font-family: 'myfont';
+        
+        letter-spacing: 1px;
+
+        border: 1px solid $gray;
+        &:focus {
+            outline: none !important;
+            box-shadow: none;
+        }
+    }
+    .name-txt{
+        height: 30px;
+        @include pc{width: 75%;}
+        @include pad{width: 80%;}
+        @include phone{width: 100%;}
+        -webkit-appearance: none;
+        border-radius: 0;
+    }
+    .profile-txt{
+        resize: none;
+        height: 80px;
+        @include pc{width: 75%;}
+        @include pad{width: 80%;}
+        @include phone{width: 100%;}
+        @include phone{height: 170px !important;}
+        -webkit-appearance: none;
+        border-radius: 0;
+    }
+    .input-filter-txt{
+        height: 30px;
+        @include pc{width: 50% !important;}
+        @include pad{width: 80% !important;}
+        @include phone{width: 90% !important;}
+        border-radius: 25px;
+    }
+    .error-txt{
+        font-family: 'myfont';
+        color: $red;
+        position: absolute;
+    }
+}
+.input-filter-margin{
+    @include pc{
+        margin-top: 2%;
+    }
+    @include pad{
+        margin-top: 10%;
+        margin-bottom: 8%;
+    }
+    @include phone{
+        margin-top:5%;
+        margin-bottom: 3%;
+    }
+}
+.input-margin{
+    margin-top: 10%;
+    margin-bottom: 10%;
+    @include phone{
+        margin-top: 10%;
+        margin-bottom: 10%;
+    }
+}
