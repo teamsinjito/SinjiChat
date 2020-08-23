@@ -1,7 +1,6 @@
-.react-autosuggest__container{
+.input-fitler-txt-container{
     @include pc{
         margin-top: 2%;
-        // margin-bottom: 3%;
     }
     @include pad{
         margin-top: 10%;
@@ -12,7 +11,7 @@
         margin-bottom: 3%;
     }
     text-align: center;
-    .react-autosuggest__input{
+    .input-fitler-txt{
         font-family: 'myfont';
         border-radius: 25px;
         letter-spacing: 1px;
@@ -27,7 +26,4 @@
             box-shadow: none;
         }
     }
-}
-.react-autosuggest__suggestions-list {
-    display: none;
 }

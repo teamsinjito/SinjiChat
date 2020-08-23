@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // タイトル
-export function Title() {
+export const Title = () => {
     return (
         <div className="text">
             <p className="title-white title_w">
@@ -12,7 +12,7 @@ export function Title() {
     );
 }
 // サイドバー用
-export function SideBarTitle() {
+export const SideBarTitle = () => {
     return (
         <p className="title-black title_B">
             SinjiChat

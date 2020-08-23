@@ -24,5 +24,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('AddFriend/post', 'AddFriendController@postRequest');
     Route::get('Talk/get', 'TalkController@getAllFriend');
     Route::post('Talk/post', 'TalkController@postRequest');
+    Route::post('Talk/imagePost', 'TalkController@imagePostRequest');
+    Route::post('Talk/upDateReadFlg', 'TalkController@upDateReadFlg');
     Route::post('TimeLine/post', 'TimeLineController@tweetInsert');
 });
