@@ -1,6 +1,6 @@
 import React,{ useState, useContext, Fragment } from 'react';
 import {PageHeaderTitle as HeaderTitle,PageHeaderSubTitle as HeaderSubTitle} from '../Common/PageHeader';
-import InputFilterTxt from '../Common/InputTxt';
+import {InputFilterTxt} from '../Common/InputTxt';
 import ImageList from '../Common/ImageList';
 import Slider from "react-slick";
 import Rodal from 'rodal';

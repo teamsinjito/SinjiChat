@@ -21,7 +21,11 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/get', 'HomeController@getMyRelationData');
     Route::get('AddFriend/get', 'AddFriendController@getAllUserWithOutFriend');
+    Route::get('AddGroup/get', 'AddGroupController@getMyFriend');
+    Route::post('AddGroup/post', 'AddGroupController@postRequest');
     Route::post('AddFriend/post', 'AddFriendController@postRequest');
+    Route::post('Request/post/allow', 'RequestController@postRequestAllow');
+    Route::post('Request/post/ignore', 'RequestController@postRequestIgnore');
     Route::get('Talk/get', 'TalkController@getAllFriend');
     Route::post('Talk/post', 'TalkController@postRequest');
     Route::post('Talk/imagePost', 'TalkController@imagePostRequest');

@@ -8,6 +8,14 @@
         opacity: .5;
     }
 }
+.labelButton-common{
+    font-family: 'myfont';
+    color: $black;
+    &:hover{
+        cursor: pointer;
+        opacity: .5;
+    }
+}
 .btn-lock{
     opacity: .5;
     pointer-events: none;
@@ -23,10 +31,11 @@
     }
 }
 .pc-show{
-    @include pad{display: none!important;}
+    // @include pad{display: none!important;}
     @include phone{display: none!important;}
 }
 .pc-none{
     @include pc{display: none!important;}
-    // @include phone{display: none;}
+    @include pad{display: none!important;}
+    @include phone{display: block!important;}
 }
