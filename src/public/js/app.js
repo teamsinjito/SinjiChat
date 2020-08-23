@@ -111183,6 +111183,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Tweet", function() { return Tweet; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Common_PageHeader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Common/PageHeader */ "./resources/js/Common/PageHeader.js");
+/* harmony import */ var react_file_input_previews_base64__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-file-input-previews-base64 */ "./node_modules/react-file-input-previews-base64/lib/index.js");
+/* harmony import */ var react_file_input_previews_base64__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_file_input_previews_base64__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Common_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Common/Button */ "./resources/js/Common/Button.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_radio_group__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-radio-group */ "./node_modules/react-radio-group/lib/index.js");
+/* harmony import */ var react_radio_group__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_radio_group__WEBPACK_IMPORTED_MODULE_7__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -111206,21 +111218,260 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
+
+
+
+
+
+
+ //psql -U admin sinjichat
+//登録ボタン設定値
+
+var button = [['呟く', 'btn-active', 'none'], ['呟き中', 'btn-lock', 'loading'], ['呟き済', 'btn-lock', 'check'], ['申請失敗', 'btn-active', 'miss']];
+var errorMessage = ['本文は入力必須です', '本文は250文字以下で入力してください', '画像は挿入必須です'];
+var canvasWidth = "368";
+var canvasHeight = "554";
 var Tweet = /*#__PURE__*/function (_React$Component) {
   _inherits(Tweet, _React$Component);
 
   var _super = _createSuper(Tweet);
 
-  function Tweet() {
+  //コンストラクタが必要
+  //ここでボタンの初期表示を設定する必要がある
+  //requestTweetをOnclickで呼び出すためにbindしている？
+  function Tweet(props) {
+    var _this;
+
     _classCallCheck(this, Tweet);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this, props);
+    _this.requestTweet = _this.requestTweet.bind(_assertThisInitialized(_this));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    _this.state = {
+      status: button[0],
+      tweetHonbun: null,
+      tweetImage: null,
+      textCount: 0,
+      errorLavelText: "",
+      errorLavelImage: "",
+      selectedValue: 'text'
+    };
+    return _this;
   }
 
   _createClass(Tweet, [{
+    key: "requestTweet",
+    value: function requestTweet() {
+      var _this2 = this;
+
+      //入力値取得
+      this.state.tweetHonbun = document.getElementById('honbun').value;
+      this.state.textCount = document.getElementById('honbun').value.length; //エラー判定フラグ
+
+      var errorChecker = false; //エラーメッセージ初期化(前回分をリセットする)
+
+      this.setState({
+        errorLavelText: ""
+      });
+      this.setState({
+        errorLavelImage: ""
+      }); //要素チェック1(本文入力確認)
+
+      if (this.state.tweetHonbun == "") {
+        this.setState({
+          errorLavelText: errorMessage[0]
+        });
+        errorChecker = true;
+        console.log(this.state.errorLavelText);
+      } //要素チェック2(本文文字数確認)
+      else if (this.state.textCount > 250) {
+          this.setState({
+            errorLavelText: errorMessage[1]
+          });
+          errorChecker = true;
+          console.log(this.state.errorLavelText);
+        } //要素チェック3(画像入力確認)
+
+
+      if (this.state.tweetImage == null) {
+        this.setState({
+          errorLavelImage: errorMessage[2]
+        });
+        errorChecker = true;
+        console.log(this.state.errorLavelImage);
+      } //フラグが立っている時、エラー要素があるので処理を落とす
+
+
+      if (errorChecker == true) {
+        return;
+      } //ここまで来たらエラーはないのでaxiosでPOST処理を行う
+      //ここで申請中ボタンに切り替えている
+      //この処理を行うとrender処理が走る(差分描画のみ行う)
+
+
+      this.setState({
+        status: button[1]
+      });
+      axios__WEBPACK_IMPORTED_MODULE_5___default.a //POST処理
+      //(入力したTweet内容を引数で投げる) 
+      .post('/TimeLine/post', {
+        message: this.state.tweetHonbun,
+        image: this.state.tweetImage
+      }) //res：返り値(Modelでretarnで指定している値)
+      .then(function (res) {
+        console.log("STATUS_CODE:" + res.data);
+
+        _this2.setState({
+          status: button[res.data]
+        });
+      }) //error：コントロール側でcatchした際に戻ってくる値
+      ["catch"](function (error) {
+        console.log("STATUS_CODE*" + error);
+
+        _this2.setState({
+          status: button[error]
+        });
+      });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(value) {
+      console.log(value);
+      this.setState({
+        selectedValue: value
+      }); //選択した値によって表示項目を切り替える
+
+      if (value == "text") {
+        document.getElementById("canvas-area").style.display = "none";
+        document.getElementById("input-area").style.display = "block";
+      } else {
+        document.getElementById("canvas-area").style.display = "block";
+        document.getElementById("input-area").style.display = "none";
+      }
+    }
+  }, {
+    key: "bgImgSet",
+    value: function bgImgSet(file) {
+      // var bgImg = new Image();
+      // var context = this.refs.canvas.getContext('2d');
+      // var canvas = this.refs.canvas;
+      // bgImg.onload = function () {
+      //     context.clearRect(0, 0, canvas.width, canvas.height);
+      //     context.globalCompositeOperation = 'source-over';
+      //     context.drawImage(bgImg,(canvasWidth-bgImg.width)/2,(canvasHeight-bgImg.height)/2, bgImg.width, bgImg.height);
+      // };
+      // bgImg.src = file.base64;
+      var elem = document.getElementById("previewImage");
+      elem.src = file.base64;
+    }
+  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Hello");
+      var _this3 = this;
+
+      return (
+        /*#__PURE__*/
+        //①「container」はあってもなくてもOK　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+        //全体的に真ん中に寄る感じ
+        //rowは内包する要素を横並びにする役割を担っている
+        //レスポンシブの根幹を担っているのはcol-??-?
+        //　→デバイスサイズごとに設定する必要がある
+        //「xl」だと大体macbookぐらい
+        //今回はxl以外に別デバイス用の設定が必要でそれがcol-12
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "container form-group mt-5 tweet-area h-100"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Common_PageHeader__WEBPACK_IMPORTED_MODULE_2__["PageHeaderTitle"], {
+          title: "Tweet"
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Common_PageHeader__WEBPACK_IMPORTED_MODULE_2__["PageHeaderSubTitle"], {
+          title: "\u65B0\u3057\u3044\u540D\u8A00\u3092\u307E\u305F\u4E00\u3064\u751F\u307F\u51FA\u305D\u3046\u304B"
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "input-area",
+          className: "col-xl-8 col-12 input-area"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+          id: "honbun",
+          rows: "10",
+          cols: "80",
+          placeholder: "\u672C\u6587\u3092\u5165\u529B\u30FB\u30FB\u30FB"
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "offset-4 col-xl-4 p-0 pc-show"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Common_Button__WEBPACK_IMPORTED_MODULE_4__["Button"], {
+          btn: this.state.status,
+          onclick: this.requestTweet
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "errorLabelText",
+          className: "error-message"
+        }, this.state.errorLavelText), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "errorLabelImage",
+          className: "error-message"
+        }, this.state.errorLavelImage))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "canvas-area",
+          className: "col-xl-4 col-10 canvas-area p-0  phone-layout"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_file_input_previews_base64__WEBPACK_IMPORTED_MODULE_3___default.a, {
+          labelStyle: {
+            display: "none"
+          } //ラベルは不要なので非表示にする
+          ,
+          imageStyle: {
+            height: "100%"
+          } //プレビュー画像に付与するスタイル情報
+          ,
+          parentStyle: {} //スタイル
+          ,
+          imagePreview: false //ファイルのプレビュー
+          ,
+          multiple: false //複数ファイル選択
+          ,
+          callbackFunction: function callbackFunction(file) {
+            //選択後のコールバック関数
+            console.log(file);
+
+            _this3.setState({
+              tweetImage: file.base64
+            });
+
+            _this3.bgImgSet(file);
+          },
+          buttonComponent:
+          /*#__PURE__*/
+          //クリック時に選択ダイアログを開くコンポーネント
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "img-wrapper"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "img-block"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            id: "tweetImage",
+            className: "inputImg",
+            border: "1",
+            src: "/img/upload.png"
+          }))),
+          accept: "image/*" //許可するファイルのtype
+
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          id: "previewImage",
+          className: "previewImage"
+        }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-xl-4 col-12 pc-none"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_radio_group__WEBPACK_IMPORTED_MODULE_7__["RadioGroup"], {
+          className: "changeRadio",
+          selectedValue: this.state.selectedValue,
+          onChange: this.handleChange
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_radio_group__WEBPACK_IMPORTED_MODULE_7__["Radio"], {
+          value: "text"
+        }), "\u672C\u6587", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_radio_group__WEBPACK_IMPORTED_MODULE_7__["Radio"], {
+          value: "image"
+        }), "\u753B\u50CF"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "errorLabelText",
+          className: "error-message"
+        }, this.state.errorLavelText), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "errorLabelImage",
+          className: "error-message"
+        }, this.state.errorLavelImage), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Common_Button__WEBPACK_IMPORTED_MODULE_4__["Button"], {
+          btn: this.state.status,
+          onclick: this.requestTweet
+        })))
+      );
     }
   }]);
 
@@ -112683,7 +112934,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_intersection_observer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-intersection-observer */ "./node_modules/react-intersection-observer/react-intersection-observer.esm.js");
-/* harmony import */ var use_interval__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! use-interval */ "./node_modules/use-interval/dist/index.es.js");
+/* harmony import */ var use_interval__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! use-interval */ "./node_modules/use-interval/dist/index.es.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Top_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Top/index */ "./resources/js/Top/index.js");
@@ -112735,7 +112986,7 @@ var MainArea = function MainArea() {
       ref = _useInView2[0],
       inView = _useInView2[1];
 
-  Object(use_interval__WEBPACK_IMPORTED_MODULE_2__["default"])(function () {
+  Object(use_interval__WEBPACK_IMPORTED_MODULE_13__["default"])(function () {
     axios.get('/get').then(function (res) {
       dispatch({
         type: 'GET_INTERVAL_DATA',
@@ -112808,8 +113059,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
-module.exports = {"phone":"767","pad":"1024"};
+throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\n\n@import 'Mypage/index';\n                     ^\n      Expected \"{\".\n  ╷\n9 │ @import 'Mypage/index';\n  │                       ^\n  ╵\n  stdin 9:23  root stylesheet\n      in /var/www/html/resources/sass/app.scss (line 9, column 23)\n    at /var/www/html/node_modules/webpack/lib/NormalModule.js:316:20\n    at /var/www/html/node_modules/loader-runner/lib/LoaderRunner.js:367:11\n    at /var/www/html/node_modules/loader-runner/lib/LoaderRunner.js:233:18\n    at context.callback (/var/www/html/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at /var/www/html/node_modules/sass-loader/dist/index.js:89:7\n    at Function.call$2 (/var/www/html/node_modules/sass/sass.dart.js:88152:16)\n    at _render_closure1.call$2 (/var/www/html/node_modules/sass/sass.dart.js:77577:12)\n    at _RootZone.runBinary$3$3 (/var/www/html/node_modules/sass/sass.dart.js:26142:18)\n    at _RootZone.runBinary$3 (/var/www/html/node_modules/sass/sass.dart.js:26146:19)\n    at _FutureListener.handleError$1 (/var/www/html/node_modules/sass/sass.dart.js:24590:19)\n    at _Future__propagateToListeners_handleError.call$0 (/var/www/html/node_modules/sass/sass.dart.js:24887:40)\n    at Object._Future__propagateToListeners (/var/www/html/node_modules/sass/sass.dart.js:4311:88)\n    at _Future._completeError$2 (/var/www/html/node_modules/sass/sass.dart.js:24715:9)\n    at _AsyncAwaitCompleter.completeError$2 (/var/www/html/node_modules/sass/sass.dart.js:24107:12)\n    at Object._asyncRethrow (/var/www/html/node_modules/sass/sass.dart.js:4065:17)\n    at /var/www/html/node_modules/sass/sass.dart.js:14085:20\n    at _wrapJsFunctionForAsync_closure.$protected (/var/www/html/node_modules/sass/sass.dart.js:4090:15)\n    at _wrapJsFunctionForAsync_closure.call$2 (/var/www/html/node_modules/sass/sass.dart.js:24128:12)\n    at _awaitOnObject_closure0.call$2 (/var/www/html/node_modules/sass/sass.dart.js:24120:25)\n    at _RootZone.runBinary$3$3 (/var/www/html/node_modules/sass/sass.dart.js:26142:18)\n    at _RootZone.runBinary$3 (/var/www/html/node_modules/sass/sass.dart.js:26146:19)\n    at _FutureListener.handleError$1 (/var/www/html/node_modules/sass/sass.dart.js:24590:19)\n    at _Future__propagateToListeners_handleError.call$0 (/var/www/html/node_modules/sass/sass.dart.js:24887:40)\n    at Object._Future__propagateToListeners (/var/www/html/node_modules/sass/sass.dart.js:4311:88)\n    at _Future._completeError$2 (/var/www/html/node_modules/sass/sass.dart.js:24715:9)\n    at _Future__asyncCompleteError_closure.call$0 (/var/www/html/node_modules/sass/sass.dart.js:24810:18)\n    at Object._microtaskLoop (/var/www/html/node_modules/sass/sass.dart.js:4361:21)\n    at StaticClosure._startMicrotaskLoop (/var/www/html/node_modules/sass/sass.dart.js:4367:11)\n    at _AsyncRun__scheduleImmediateJsOverride_internalCallback.call$0 (/var/www/html/node_modules/sass/sass.dart.js:24022:21)\n    at invokeClosure (/var/www/html/node_modules/sass/sass.dart.js:1363:26)\n    at Immediate.<anonymous> (/var/www/html/node_modules/sass/sass.dart.js:1384:18)\n    at processImmediate (internal/timers.js:458:21)");
 
 /***/ }),
 
