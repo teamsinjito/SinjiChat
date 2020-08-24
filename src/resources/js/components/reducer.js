@@ -10,7 +10,8 @@ const reducer = (state = {}, action={}) => {
                         myFriendList:action.payload.friend,
                         myChatHistory:action.payload.talk,
                         request:action.payload.request,
-                        firstLoadFlg:false
+                        firstLoadFlg:false,
+                        me:action.payload.me
                     }
                 }
             }

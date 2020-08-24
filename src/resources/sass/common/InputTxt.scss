@@ -30,6 +30,15 @@
         -webkit-appearance: none;
         border-radius: 0;
     }
+    .tweet-txt{
+        resize: none;
+        height: 100%;
+        @include pc{width: 100%;}
+        @include pad{width: 100%;}
+        @include phone{width: 100%;}
+        -webkit-appearance: none;
+        border-radius: 0;
+    }
     .input-filter-txt{
         height: 30px;
         @include pc{width: 50% !important;}
@@ -42,6 +51,11 @@
         color: $red;
         position: absolute;
     }
+}
+.error-txt{
+    font-family: 'myfont';
+    color: $red;
+    position: absolute;
 }
 .input-filter-margin{
     @include pc{

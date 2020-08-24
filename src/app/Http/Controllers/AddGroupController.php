@@ -9,10 +9,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use App\Http\Traits\EditImage;
 
 class AddGroupController extends Controller
 {
     //
+    use EditImage;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -44,11 +47,15 @@ class AddGroupController extends Controller
         DB::beginTransaction();
         $now = Carbon::now();
         try{
+
+            //intervention/imageで画像リサイズ
+            $image = $this->ResizeImage($request->icon);
+
             //新しいグループを作成
             $newGroup = Group::create([
                 'name'=>$request->name,
                 'profile'=>$request->profile,
-                'icon'=>$request->icon,
+                'icon'=>$image,
             ]);
 
             //画面で選択したユーザをグループリストに追加

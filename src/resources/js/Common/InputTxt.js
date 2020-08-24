@@ -33,4 +33,11 @@ export const InputProfileTxt = ({value,onChange,error,errorImage}) => {
     )
 }
 
-// export default InputFilterTxt
+export const InputTweetTxt = ({value,onChange}) => {
+
+    return(
+        <div className="input-txt-container h-100">
+            <textarea className="input-txt tweet-txt"type="text" value={value} onChange={onChange} rows={3} cols={2} placeholder="一言メッセージ…" maxLength={250}/>
+        </div>
+    )
+}

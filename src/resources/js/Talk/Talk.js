@@ -281,7 +281,7 @@ const ProfileArea = ({icon,name,profile,visible,onClick}) =>{
 
     return(
         <div className={`profile-area  pl-0 pr-0 col-xl-4 col-12 w-100 ${visible}`}>
-            <img src={`data:image/jpg;base64,${icon}`} className="w-100"/>
+            <img src={icon} className="w-100"/>
             <div className="w-100 profile-txt-area gray_touka pt-5 pb-5">
                 <p className="txt_L mb-5">{name}</p>
                 <p className="txt_L">{profile}</p>
@@ -339,7 +339,7 @@ const OtherComment = ({created_at,image,message,icon}) => {
     return(
         <div className="balloon6">
             <div className="faceicon">
-                <img src={`data:image/jpg;base64,${icon}`} className=""/>
+                <img src={icon} className=""/>
             </div>
             <div className="chatting">
                 <div className="says">
