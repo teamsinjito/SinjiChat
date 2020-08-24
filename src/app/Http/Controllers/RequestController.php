@@ -23,24 +23,23 @@ class RequestController extends Controller
             if($request->type == "Friend"){
 
                 
-                // $status=config('const.Request.FRIEND_STATUS.friend');
+                $status=config('const.Request.FRIEND_STATUS.friend');
 
                 //相手側のstatusを更新
                 FriendList::where('room_id',$r_str)
-                        ->update(['status'=>3]); 
+                        ->update(['status'=>$status]); 
 
                 $friend = DB::table('friend_lists')
                         ->where('room_id',$r_str)
-                        ->where('status',3)
-                        ->select('to_user_id')
+                        ->select('from_user_id')
                         ->get();
 
                 //自分用に追加
                 $friendList = FriendList::create([
                     'from_user_id'=>Auth::user()->id,
-                    'to_user_id'=>$friend,
+                    'to_user_id'=>$friend[0]->from_user_id,
                     'room_id'=>$r_str,
-                    'status'=>3
+                    'status'=>$status
                 ]);
 
             }else{

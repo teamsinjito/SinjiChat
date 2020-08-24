@@ -923,6 +923,9 @@ radio-group {
   display: flex;
   justify-content: space-around;
 }
+radio-group input[type=radio] {
+  display: none;
+}
 
 @media (max-width: 767px) {
   .visibleProfile-profile, .visibleImage-image {
@@ -934,10 +937,6 @@ radio-group {
   .visibleImage-profile, .visibleProfile-image {
     display: none;
   }
-}
-
-input[type=radio] {
-  display: none;
 }
 
 .radio-mark {
@@ -1052,6 +1051,27 @@ input[type=radio] {
     height: 170px !important;
   }
 }
+.input-txt-container .tweet-txt {
+  resize: none;
+  height: 100%;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+@media (min-width: 1025px) {
+  .input-txt-container .tweet-txt {
+    width: 100%;
+  }
+}
+@media (max-width: 1024px) {
+  .input-txt-container .tweet-txt {
+    width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .input-txt-container .tweet-txt {
+    width: 100%;
+  }
+}
 .input-txt-container .input-filter-txt {
   height: 30px;
   border-radius: 25px;
@@ -1072,6 +1092,12 @@ input[type=radio] {
   }
 }
 .input-txt-container .error-txt {
+  font-family: "myfont";
+  color: #e3342f;
+  position: absolute;
+}
+
+.error-txt {
   font-family: "myfont";
   color: #e3342f;
   position: absolute;

@@ -7,7 +7,35 @@ export const CanvasImage = (props) => {
     const canvasHeight = "554";
     const canvasRef = useRef(null);
 
+    useEffect(() => {
+        
+        if(props.initialImage != ''){
+
+            initialImageSet(props.initialImage);
+
+        }
+
+    },[]);
+    
+    function initialImageSet(fileBase64){
+        var bgImg = new Image();
+        var context = canvasRef.current.getContext('2d');
+        var canvas = canvasRef.current;
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        bgImg.onload = function () {
+            context.globalCompositeOperation = 'source-over';
+            console.log(bgImg.width);
+            console.log(bgImg.height);
+            // context.drawImage(bgImg,(canvasWidth-bgImg.width)/2,(canvasHeight-bgImg.height)/2, bgImg.width, bgImg.height);
+            context.drawImage(bgImg,0,0, canvas.width, canvas.height);
+        };
+        bgImg.src = fileBase64;
+
+    }
+
     function bgImageSet(file){
+
         var bgImg = new Image();
         var context = canvasRef.current.getContext('2d');
         var canvas = canvasRef.current;

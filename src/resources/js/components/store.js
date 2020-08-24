@@ -10,6 +10,7 @@ const initialState={
         myFriendList:[], //友達リスト
         request:[], //友達申請、グループ申請
         firstLoadFlg:true, //初期表示ローディングフラグ
+        me:[]//自身のデータ
     },
     
     allUser:[],//全ユーザリスト AddFriend用

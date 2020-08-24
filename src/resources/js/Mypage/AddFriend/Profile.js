@@ -101,7 +101,7 @@ export const AddFriendProfile = (props) => {
                     </div>
                 </div>
                 <div className="col-xl-4 col-12">
-                    <img src={`data:image/jpg;base64,${userData('icon')}`} className="w-100"/>
+                    <img src={userData('icon')} className="w-100"/>
                 </div>
             </div>
             <div className="row  pc-none">

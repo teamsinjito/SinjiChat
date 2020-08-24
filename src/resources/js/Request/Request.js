@@ -92,7 +92,7 @@ export const Request = (props) => {
 
                 </div>
                 <div className="col-xl-4 col-12">
-                    <img src={props.type == "Friend" ? `data:image/jpg;base64,${props.icon}`:props.icon} className="w-100"/>
+                    <img src={props.icon} className="w-100"/>
                 </div>
             </div>
             <div className="pc-none mt-5 p-0">

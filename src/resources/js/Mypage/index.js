@@ -5,6 +5,7 @@ import ImageList from'../Common/ImageList';
 import {AddGroup} from './AddGroup/AddGroup';
 import {AddFriend} from './AddFriend/AddFriend';
 import {Tweet} from './Tweet/Tweet';
+import {Option} from './Option/Option';
 import Rodal from 'rodal';
 
 import {Store,Provider} from '../components/store'
@@ -36,7 +37,7 @@ export const MypageIndex = () => {
         }else if(id=="menu3"){
             setDom(<AddFriend/>)
         }else if(id=="menu4"){
-            setDom(<AddFriend/>)
+            setDom(<Option/>)
         }else{
             setDom(<AddFriend/>)         
         }

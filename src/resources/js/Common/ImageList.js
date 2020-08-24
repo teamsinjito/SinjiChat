@@ -13,7 +13,7 @@ const ImageList = ({listElement,menu,index,onClick}) =>{
         return(
             <div className="user-list">
                 <img 
-                    src={`data:image/jpg;base64,${listElement.icon}`} 
+                    src={listElement.icon}
                     alt=''  
                     className="w-100 pr-2 pl-2" 
                     data-index={index}
@@ -46,7 +46,7 @@ const ImageList = ({listElement,menu,index,onClick}) =>{
         return(
             <div className="user-list">
                 <img 
-                    src={`data:image/jpg;base64,${listElement.icon}`} 
+                    src={listElement.icon}  
                     alt=''  
                     className="w-100 pr-2 pl-2" 
                     data-index={index}
@@ -64,7 +64,7 @@ const ImageList = ({listElement,menu,index,onClick}) =>{
             <Fragment>
                 <div className="add-group-list user-list" onClick={onClick} data-id={listElement.id}>
                     <img 
-                        src={`data:image/jpg;base64,${listElement.icon}`} 
+                        src={listElement.icon} 
                         alt=''  
                         className={`w-100 pr-2 pl-2 img-opacity-${listElement.checked}`} 
                     /> 
@@ -83,7 +83,7 @@ const ImageList = ({listElement,menu,index,onClick}) =>{
         return(
             <div className="user-list">
                 <img 
-                    src={listElement.requesttype == "Friend" ? `data:image/jpg;base64,${listElement.icon}`:listElement.icon} 
+                    src={listElement.icon} 
                     alt=''  
                     className="w-100 pr-2 pl-2" 
                     data-index={index}

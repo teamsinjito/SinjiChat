@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Intervention\Image\Facades\Image;
+use App\Http\Traits\EditImage;
+
 class RegisterController extends Controller
 {
     /*
@@ -22,7 +24,7 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
-
+    use EditImage;
     /**
      * Where to redirect users after registration.
      *
@@ -65,11 +67,12 @@ class RegisterController extends Controller
     {
         $imagefile=$data['image'];
         $image=$imagefile->get();
-        if(empty($image)){
-            $image =null;
-        }else{
-            $image = base64_encode(Image::make($image)->stream('jpg', 50));          
-        }
+        $image=$this->ResizeImage($image);
+        // if(empty($image)){
+        //     $image =null;
+        // }else{
+        //     $image = base64_encode(Image::make($image)->stream('jpg', 50));          
+        // }
 
         return User::create([
             'name' => $data['name'],
