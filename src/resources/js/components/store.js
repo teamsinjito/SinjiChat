@@ -58,6 +58,12 @@ const initialState={
                 }
             }
         ]
+    },
+    swipeSettingTimeLine:{
+        className: "center",
+        infinite: false,
+        slidesToShow: 1,
+        swipeToSlide: true,
     }
 }
 

@@ -22,11 +22,11 @@ class TimeLineController extends Controller
 
     public function tweetInsert(Request $request)
     {
-
+        try{
         // トランザクション開始
         DB::beginTransaction();
         
-        try{
+
             //リサイズ処理呼び出し
             $image=$this->ResizeImage($request->image);
 
@@ -46,5 +46,20 @@ class TimeLineController extends Controller
             DB::rollback();
             
         }
+    }
+
+    public function getTweetData(Request $request)
+    {
+        try{
+            // 最新データを10件取得
+            $timeLineData = DB::table('time_lines')
+            ->orderBy('id', 'DESC')
+            ->take(10)
+            ->get();
+        }
+        catch(\Exception $e){
+            return($e);
+        }
+        return($timeLineData);
     }
 }
