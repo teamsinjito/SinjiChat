@@ -6,6 +6,8 @@ import {TopIndex as Top} from './Top/index';
 import {MypageIndex as Mypage} from './Mypage/index';
 import {TalkIndex as Talk} from './Talk/index';
 import {TimeLineIndex as TimeLine} from './TimeLine/index';
+import {Footer} from './Footer/Footer';
+import {Loading} from './Common/Loading';
 import {RequestIndex as Request} from './Request/index';
 import {SideBarNav} from './Nav/SideBarNav';
 import "slick-carousel/slick/slick.css";
@@ -53,8 +55,9 @@ const MainArea=()=>{
                     <Mypage />
                     <Talk />
                     <TimeLine />
+                    <Footer />
                 </div>
-            </>:<em>loading</em>}   
+            </>:<Loading h="h-100" text="Loading..."/>}   
         </>
     );
 }
@@ -70,6 +73,8 @@ const Main=()=> {
     )
 }
 
+
 if (document.getElementById('home-id')) {
     ReactDOM.render(<Main />, document.getElementById('home-id'));
 }
+

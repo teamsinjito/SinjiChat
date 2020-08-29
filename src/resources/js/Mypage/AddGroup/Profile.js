@@ -80,7 +80,7 @@ export const AddGroupProfile = (props) => {
                 })
                 .catch(error => {
                     console.log("STATUS_CODE:"+error)
-                    setButton(button[res.data])
+                    setButton(button[error])
                 })
         }
 

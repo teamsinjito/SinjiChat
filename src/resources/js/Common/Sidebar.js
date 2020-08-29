@@ -4,7 +4,7 @@ import {MypageIndex} from '../Mypage/index';
 import {RequestIndex} from '../Request/index';
 import {TalkIndex} from '../Talk/index';
 import {TimeLineIndex} from '../TimeLine/index';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route,Redirect } from "react-router-dom";
 import Layout from './Layout';
 
 export const Sidebar = (props) => {
@@ -19,7 +19,8 @@ export const Sidebar = (props) => {
                     <Route  name="/Mypage"path="/Mypage" component={MypageIndex} />
                     <Route  path="/Request" component={RequestIndex} />
                     <Route  path="/Talk" component={TalkIndex} />
-                    <Route  path="/TimeLine" component={TimeLineIndex} />             
+                    <Route  path="/TimeLine" component={TimeLineIndex} /> 
+                    <Redirect to="/login"/>            
                 </Layout>
             </Router>
         </div>

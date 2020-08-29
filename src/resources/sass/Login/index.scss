@@ -6,19 +6,61 @@
     width: 100%;
     display: flex;
     font-family: 'myfont';
+    position: relative;
+
+    .form-area{
+        @include pad{position: absolute;}
+        @include phone{position: absolute;}
+
+        a{
+            position: relative;
+            display: inline-block;
+            &::after{
+                position: absolute;
+                bottom: -4px;
+                left: 0;
+                content: '';
+                width: 100%;
+                height: 1px;
+                background: $black;
+                transform: scale(0, 1);
+                transform-origin: left top;
+                transition: transform .3s;
+            }
+            &:hover::after {
+                transform: scale(1, 1);
+            }
+        }
+    }
 }
 
 .login-form{
     position: relative;
     .login-form-area{
+        display: flex;
+        flex-direction: column;
         position: absolute;
-        top: 20%;
+    }
+    .in-register{
+        justify-content: space-evenly;
+    }
+    .in-login{
+        justify-content: center;
     }
 
 }
 .button-form{
     display: flex;
     justify-content: center;
+    
+    .commonBtn:hover{
+        opacity: .5;
+    }
+}
+.error-form-group{
+    text-align: center;
+    color: $red;
+    position: absolute;
 }
 #password,#password-confirm{
     font-family: 'myfont-password';

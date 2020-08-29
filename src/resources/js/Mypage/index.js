@@ -1,4 +1,4 @@
-import React, { useContext,useState } from 'react';
+import React, { useContext,useState,useEffect } from 'react';
 import {PageHeaderTitle as HeaderTitle,PageHeaderSubTitle as HeaderSubTitle} from '../Common/PageHeader';
 import Slider from "react-slick";
 import ImageList from'../Common/ImageList';
@@ -6,9 +6,12 @@ import {AddGroup} from './AddGroup/AddGroup';
 import {AddFriend} from './AddFriend/AddFriend';
 import {Tweet} from './Tweet/Tweet';
 import {Option} from './Option/Option';
+import {Sequrity} from './Sequrity/Sequrity';
+import {Admin} from './Admin/Admin';
 import Rodal from 'rodal';
 
 import {Store,Provider} from '../components/store'
+import { set } from 'lodash';
 
 
 export const MypageIndex = () => {
@@ -16,16 +19,25 @@ export const MypageIndex = () => {
     const {state, dispatch} = useContext(Store)　//store参照
     const[view,setView]=useState(false) //各種モーダル画面表示フラグ
     const[openDom,setDom]=useState("") //各種モーダル画面DOM
-
+    const admin ="administrator";
     //メニューリスト
-    const list =[
+    const [list,setList] =useState([
         {icon:'/img/Tweet.png',name:'名言をタイムラインに投稿します',id:'menu1'},
         {icon:'/img/AddGroup.png',name:'トークグループを作成します',id:'menu2'},
         {icon:'/img/AddFriend.png',name:'友達申請メールを送ります',id:'menu3'},
         {icon:'/img/Option.png',name:'ユーザ情報を編集します',id:'menu4'},
         {icon:'/img/Security.png',name:'ログイン情報を編集します',id:'menu5'}
-    ]
+    ]);
 
+    useEffect(() => {
+
+        if(state.intervalGetData.me[0].admin == admin){
+            console.log('admin')
+            var newList = list.concat({icon:'/img/Admin.png',name:'管理者画面を表示します',id:'menu6'});
+            setList(newList);
+        }
+
+    },[])
     //モーダル表示
     function openModal(e){
         const id = e.currentTarget.id;
@@ -38,8 +50,10 @@ export const MypageIndex = () => {
             setDom(<AddFriend/>)
         }else if(id=="menu4"){
             setDom(<Option/>)
+        }else if(id=="menu5"){
+            setDom(<Sequrity/>)         
         }else{
-            setDom(<AddFriend/>)         
+            setDom(<Admin/>)
         }
 
         //モーダル表示
@@ -50,7 +64,7 @@ export const MypageIndex = () => {
 
     //モーダル非表示
     function closeModal() {
-
+        history.replaceState('','','/')
         setDom("")
         //モーダル非表示
         setView(false);

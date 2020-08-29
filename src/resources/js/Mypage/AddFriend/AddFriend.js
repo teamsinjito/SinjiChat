@@ -3,6 +3,7 @@ import {PageHeaderTitle as HeaderTitle,PageHeaderSubTitle as HeaderSubTitle} fro
 import axios from "axios";
 import {InputFilterTxt} from '../../Common/InputTxt';
 import ImageList from '../../Common/ImageList';
+import {Loading} from '../../Common/Loading';
 import Slider from "react-slick";
 import {AddFriendProfile} from './Profile';
 import Rodal from 'rodal';
@@ -15,7 +16,7 @@ export const AddFriend = () => {
     const [value,setValue] = useState("")  //テキストボックス入力値
     const [view,setView] =useState(false)
     const [openDom,setDom]=useState("") //プロフィール画面DOM
-    const [message,setMessage] =useState('Loading...')
+    const [message,setMessage] =useState(<Loading h="h-75" text="ユーザーリスト取得中..."/>)
 
     useEffect(() => {
         axios
@@ -37,11 +38,16 @@ export const AddFriend = () => {
     
     //ユーザプロフィール表示
     function openModal(e){
+        const index =e.currentTarget.attributes.getNamedItem('data-index').value
 
         document.body.setAttribute('style', 'overflow: hidden;');
         //Domを構築
         setDom(<AddFriendProfile 
-            index={e.currentTarget.attributes.getNamedItem('data-index').value}
+                icon={state.allUser[index].icon}
+                id={state.allUser[index].id}
+                name={state.allUser[index].name}
+                profile={state.allUser[index].profile}
+                status={state.allUser[index].status}
             />
         )
         //ユーザプロフィール表示

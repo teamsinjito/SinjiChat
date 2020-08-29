@@ -41,3 +41,32 @@ export const InputTweetTxt = ({value,onChange}) => {
         </div>
     )
 }
+
+export const InputMailTxt = ({value,onChange}) => {
+
+    return(
+        <div className="input-txt-container">
+            <input className="input-txt input-underline w-100" 
+                type="text" 
+                value={value} 
+                onChange={onChange} 
+                maxLength={60} 
+                autoFocus
+            />
+        </div>
+    )
+}
+export const InputPassTxt = ({value,onChange}) => {
+
+    return(
+        <div className="input-txt-container">
+            <input className="input-pass input-underline w-100" 
+                type="password" 
+                value={value} 
+                onChange={onChange} 
+                maxLength={60} 
+                autoFocus                     
+            />
+        </div>
+    )
+}
