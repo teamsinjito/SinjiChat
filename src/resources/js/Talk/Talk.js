@@ -17,7 +17,7 @@ export const Talk = (props) =>{
 
 
     //トークリストに変更がある場合、既読フラグ更新処理が行われる
-    useEffect(updateReadFlg, [state.intervalGetData.myChatHistory.filter(talkFilter => talkFilter.room_id==(friendData('id')))]);
+    useEffect(updateReadFlg, [state.intervalGetData.myChatHistory.filter(talkFilter => talkFilter.room_id==props.id)]);
 
     function visibleProfileArea(){
 
@@ -32,45 +32,15 @@ export const Talk = (props) =>{
         setChatVisile('show-active');
 
     }
-
-    //友達のデータを返す
-    function friendData($attribute){
-        if($attribute == 'icon'){
-            return(
-                state.intervalGetData.myFriendList[props.index].icon
-            )
-        }else if($attribute == 'id'){
-            return(
-                state.intervalGetData.myFriendList[props.index].id
-            )
-        }else if($attribute == 'name'){
-            return(
-                state.intervalGetData.myFriendList[props.index].name
-            )
-        }else if($attribute == 'new'){
-            return(
-                state.intervalGetData.myFriendList[props.index].new
-            )
-        }else if($attribute == 'profile'){
-            return(
-                state.intervalGetData.myFriendList[props.index].profile
-            )
-        }else if($attribute == 'status'){
-            return(
-                state.intervalGetData.myFriendList[props.index].status
-            )
-        }
-
-    }
     //既読フラグ更新
     function updateReadFlg(){
 
         //新着メッセージがあれば実行
-        if(friendData('new') > 0){
+        if(props.new > 0){
 
             axios
                 .post('/Talk/upDateReadFlg',{
-                    room_id:friendData('id')
+                    room_id:props.id
                 })
                 .then((res) => {
                     
@@ -121,7 +91,7 @@ export const Talk = (props) =>{
 
         const message = value;
 
-        var newMessage ={room_id:friendData('id'),from_user_id:0,message:message,created_at: new Date()}
+        var newMessage ={room_id:props.id,from_user_id:0,message:message,created_at: new Date()}
 
         dispatch({type:'LOOK_AHEAD',payload:newMessage})
         
@@ -131,7 +101,7 @@ export const Talk = (props) =>{
         axios
             .post('/Talk/post',{
                 message:message,
-                id:friendData('id')
+                id:props.id
             })
             .then((res) => {
                 dispatch({type:'END_SEND_TALK'})
@@ -151,14 +121,15 @@ export const Talk = (props) =>{
             
             const inputFile = file.base64;
 
-            var newMessage ={room_id:friendData('id'),from_user_id:0,image:inputFile,created_at: new Date()}
+            var newMessage ={room_id:props.id,from_user_id:0,image:inputFile,created_at: new Date()}
 
             dispatch({type:'LOOK_AHEAD',payload:newMessage})
 
             axios
                 .post('/Talk/imagePost',{
                     image:inputFile,
-                    id:friendData('id')
+                    id:props.id,
+                    type:"image"
                 })
                 .then((res) => {
 
@@ -178,14 +149,15 @@ export const Talk = (props) =>{
     //スタンプ送信
     function sendStamp(){
 
-        var newMessage ={room_id:friendData('id'),from_user_id:0,image:selectedStamp,created_at: new Date()}
+        var newMessage ={room_id:props.id,from_user_id:0,image:selectedStamp,created_at: new Date()}
 
         dispatch({type:'LOOK_AHEAD',payload:newMessage})
 
         axios
             .post('/Talk/imagePost',{
                 image:selectedStamp,
-                id:friendData('id')
+                id:props.id,
+                type:"stamp"
             })
             .then((res) => {
                 dispatch({type:'END_SEND_TALK'})
@@ -204,26 +176,26 @@ export const Talk = (props) =>{
         <div className="talk-area h-100">
             <div className="talk-area-in h-100 w-100">
                 <ProfileArea 
-                    icon={friendData('icon')}
-                    name={friendData('name')}
-                    profile={friendData('profile')}
+                    icon={props.icon}
+                    name={props.name}
+                    profile={props.profile}
                     visible={profileVisible} 
                     onClick={visibleChatArea}
                 />
 
                 <div className={`chat-area col-xl-8 col-12 w-100 ${chatVisible}`}>
                     <div className="chat-area-in w-100">
-                        <ChatHeader visible={visibleProfileArea} name={friendData('name')}/>
+                        <ChatHeader visible={visibleProfileArea} name={props.name}/>
 
                         <div className={`line-bc txt_XS ${stampOpen}-bc`} id="talk-modal" onClick={closeStampList}>
-                            {state.intervalGetData.myChatHistory.filter(talkFilter => talkFilter.room_id==(friendData('id'))).map((talk,index)=>
+                            {state.intervalGetData.myChatHistory.filter(talkFilter => talkFilter.room_id==(props.id)).map((talk,index)=>
                             <Fragment key={index} >
                                 <div>
                                     <TalkDate
                                         index={index}
                                         date={talk.created_at}
                                         myChatHistory={state.intervalGetData.myChatHistory}
-                                        id={friendData('id')}
+                                        id={props.id}
                                     />
 
                                     {talk.from_user_id==0 ?

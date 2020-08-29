@@ -37,7 +37,7 @@ class HomeController extends Controller
             //自分のデータを取得
             $me = DB::table('users')
                 ->where('id','=',Auth::user()->id)
-                ->select('name','icon','profile')
+                ->select('name','icon','profile','admin')
                 ->get();
 
             //友達データを取得
@@ -80,19 +80,28 @@ class HomeController extends Controller
                     ->having('t4.read_flg','=',0)
                     ->select('t4.room_id',DB::raw('count(t4.read_flg) as new'));
 
+            //トークテーブル内でルームID毎の最新日時を取得
+            $tLast = DB::table('talks as tt1')
+                    ->groupBy('room_id')
+                    ->select('room_id',DB::raw('max(created_at) as created_at'));
+
             //友達リストを抽出
             $friendList=$friendListId2->leftjoinSub($unRead,'ur',function($join){
                 $join->on('f2.room_id','=','ur.room_id');
+            })->leftjoinSub($tLast,'tl',function($join){
+                $join->on('f2.room_id','=','tl.room_id');
             })
-            ->select('u2.icon','u2.name','f2.room_id as id','u2.profile','f2.status','ur.new');
+            ->select('u2.icon','u2.name','f2.room_id as id','u2.profile','f2.status','ur.new','tl.created_at');
 
             //グループリストを抽出
             $groupList = $groupListId->leftJoinSub($unRead2,'ur2',function($join){
                 $join->on('gl.room_id','=','ur2.room_id');
+            })->leftjoinSub($tLast,'tl2',function($join){
+                $join->on('gl.room_id','=','tl2.room_id');
             })
-            ->select('g.icon','g.name','gl.room_id as id','g.profile','gl.status','ur2.new');
+            ->select('g.icon','g.name','gl.room_id as id','g.profile','gl.status','ur2.new','tl2.created_at');
 
-            $friendGroupList=$friendList->union($groupList)
+            $friendGroupList=$friendList->union($groupList)->orderByRaw('created_at DESC NULLS LAST')
             ->get();
 
             //友達とのトークリストを抽出

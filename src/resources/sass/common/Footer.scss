@@ -1,0 +1,9 @@
+.footer{
+    font-family: 'myfont-password';
+    display: flex;
+    flex-direction: column;
+    i:hover{
+        cursor: pointer;
+        opacity: .5;
+    }
+}

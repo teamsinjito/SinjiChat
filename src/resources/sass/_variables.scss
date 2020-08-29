@@ -94,3 +94,9 @@ $alpha: 0.9;
     @include phone{font-size: 50px;}
 }
 
+a{
+    color: $black;
+    &:hover{
+        color:$black;
+    }
+}

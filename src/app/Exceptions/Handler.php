@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -46,6 +47,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        // 「the page has expired due to inactivity. please refresh and try again」を表示させない
+        if ($exception instanceof TokenMismatchException) {
+            return redirect('/login')->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');
+        }
+
         return parent::render($request, $exception);
     }
 }

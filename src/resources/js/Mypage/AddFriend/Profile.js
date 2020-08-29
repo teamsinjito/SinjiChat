@@ -13,35 +13,7 @@ export const AddFriendProfile = (props) => {
                     ['申請済み','btn-lock','check'],
                     ['友達追加済み','btn-lock','check'],
                     ['申請失敗','btn-active','miss']];
-    const [btn,setButton] = useState(button[userData('status')])
-
-
-
-    //ユーザーのデータを返す
-    function userData($attribute){
-        if($attribute == 'icon'){
-            return(
-                state.allUser[props.index].icon
-            )
-        }else if($attribute == 'id'){
-            return(
-                state.allUser[props.index].id
-            )
-        }else if($attribute == 'name'){
-            return(
-                state.allUser[props.index].name
-            )
-        }else if($attribute == 'profile'){
-            return(
-                state.allUser[props.index].profile
-            )
-        }else if($attribute == 'status'){
-            return(
-                state.allUser[props.index].status
-            )
-        }
-
-    }
+    const [btn,setButton] = useState(button[props.status])
 
     //友達申請
     function requestFriend(){
@@ -51,7 +23,7 @@ export const AddFriendProfile = (props) => {
         axios
             .post('/AddFriend/post',{
 
-                to_user_id:userData('id')
+                to_user_id:props.id
 
             })
             .then((res) => {
@@ -64,8 +36,8 @@ export const AddFriendProfile = (props) => {
             .catch(error => {
 
                 console.log("STATUS_CODE*"+error)
-                setButton(button[res.data])
-                updateStatusButton(error)
+                setButton(button[4])
+                updateStatusButton(button[4])
 
             })
             
@@ -76,7 +48,7 @@ export const AddFriendProfile = (props) => {
 
         const listCopy = state.allUser.map((output,index)=>{
 
-            if(output.id == userData('id')){
+            if(output.id == props.id){
 
                 output.status=status
             }
@@ -93,15 +65,15 @@ export const AddFriendProfile = (props) => {
             <div className="row">
                 <div className="col-xl-8 col-12">    
                     <ProfileHeader title="Profile"/>
-                    <ProfileTxtLabel label={userData('name')}/>
-                    <ProfileTxtLabel label={userData('profile')}/>
+                    <ProfileTxtLabel label={props.name}/>
+                    <ProfileTxtLabel label={props.profile}/>
                     <br></br>
                     <div className="col-xl-4 p-0 pc-show">
                         <Button btn={btn} onclick={requestFriend}/>
                     </div>
                 </div>
                 <div className="col-xl-4 col-12">
-                    <img src={userData('icon')} className="w-100"/>
+                    <img src={props.icon} className="w-100"/>
                 </div>
             </div>
             <div className="row  pc-none">

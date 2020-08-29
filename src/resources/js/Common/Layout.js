@@ -1,5 +1,5 @@
 import React,{ useState, useContext, Fragment }  from 'react';
-import { Link } from "react-scroll";
+import { Link ,} from "react-scroll";
 import {RequestIndex} from '../Request';
 import {Store,Provider} from '../components/store';
 import Rodal from 'rodal';
@@ -18,7 +18,9 @@ const Layout = (props) => {
         //Request画面表示
         setView(true);
     }
-
+    function logout(){
+        document.getElementById('logoutId').click();
+    }
     function closeModal(){
 
         document.body.removeAttribute('style', 'overflow: hidden;')
@@ -64,7 +66,7 @@ const Layout = (props) => {
                     className={`menu  text-center txt_L ${props.layouts}`}
                 ><span>{state.intervalGetData.request.length > 0 ? "Request(+"+state.intervalGetData.request.length+")":"Request"}</span>
                 </Link>
-                <Link to="/logout" className={`menu  text-center txt_L ${props.layouts}`}><span>LogOut</span></Link>
+                <Link to="/" onClick={logout} className={`menu  text-center txt_L ${props.layouts}`}><span>LogOut</span></Link>
             </div>
 
             {/* Request画面 */}

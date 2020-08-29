@@ -30,3 +30,13 @@ services:
             - 5432:5430
         volumes:
             - ./db/data:/var/lib/postgres
+    mailhog:
+        container_name: study-laravel_mailhog
+        image: mailhog/mailhog
+        ports:
+            - "1025:8025"
+        environment:
+            MH_STORAGE: maildir
+            MH_MAILDIR_PATH: /tmp
+        volumes:
+            - .maildir:/tmp 

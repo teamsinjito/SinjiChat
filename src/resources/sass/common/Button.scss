@@ -16,6 +16,12 @@
         opacity: .5;
     }
 }
+.labelButton-border{
+    border-bottom: 1px solid $black;
+}
+a:hover{
+    text-decoration: none!important;
+}
 .btn-lock{
     opacity: .5;
     pointer-events: none;

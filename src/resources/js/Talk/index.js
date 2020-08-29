@@ -17,11 +17,16 @@ export const TalkIndex = () => {
 
     //トーク表示
     function openModal(e){
-
+        const index =e.currentTarget.attributes.getNamedItem('data-index').value
         document.body.setAttribute('style', 'overflow: hidden;');
         //Domを構築
         setDom(<Talk 
-            index={e.currentTarget.attributes.getNamedItem('data-index').value}
+                icon={state.intervalGetData.myFriendList[index].icon}
+                id={state.intervalGetData.myFriendList[index].id}
+                name={state.intervalGetData.myFriendList[index].name}
+                new={state.intervalGetData.myFriendList[index].new}
+                profile={state.intervalGetData.myFriendList[index].profile}
+                status={state.intervalGetData.myFriendList[index].status}
             />
         )
         //トーク画面表示

@@ -3,6 +3,7 @@ import {PageHeaderTitle as HeaderTitle,PageHeaderSubTitle as HeaderSubTitle} fro
 import axios from "axios";
 import {InputFilterTxt} from '../../Common/InputTxt';
 import ImageList from '../../Common/ImageList';
+import {Loading} from '../../Common/Loading';
 import Slider from "react-slick";
 import {AddGroupProfile} from './Profile';
 import {LabelButton} from '../../Common/Button';
@@ -16,7 +17,7 @@ export const AddGroup = () => {
     const [value,setValue] = useState("")  //テキストボックス入力値
     const [view,setView] =useState(false)
     const [openDom,setDom]=useState("") //プロフィール画面DOM
-    const [message,setMessage] =useState('Loading...')
+    const [message,setMessage] =useState(<Loading h="h-75" text="友達リスト取得中..."/>)
     const [selectUserId,setSelectUserId] = useState([])
     // const button=[['次へ','btn-lock','none'],
     //                 ['次へ','btn-active','none']];
@@ -134,14 +135,15 @@ export const AddGroup = () => {
                             )}
                             </Slider>
                         </div>
+                        <div>
+                            <div className="offset-8 col-4 offset-sm-10 col-sm-2 p-0">
+                                <LabelButton btn={btn} onclick={openModal}/>
+                            </div>
+                        </div>
                     </Fragment>
                 : <em>{message}</em>
                 }
-                <div className="row">
-                    <div className="offset-8 col-4 offset-sm-10 col-sm-2 p-0">
-                        <LabelButton btn={btn} onclick={openModal}/>
-                    </div>
-                </div>
+
             </div>
 
             {/* プロフィール画面 */}

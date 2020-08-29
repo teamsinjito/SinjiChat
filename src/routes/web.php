@@ -25,6 +25,11 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('AddGroup/post', 'AddGroupController@postRequest');
     Route::post('AddFriend/post', 'AddFriendController@postRequest');
     Route::post('Option/post', 'OptionController@postRequest');
+    ROute::post('Sequrity/post/match','SequrityController@matchPassword');
+    ROute::post('Sequrity/post/new/mail','SequrityController@postNewMail');
+    ROute::post('Sequrity/post/new/valid','SequrityController@validateNewPassword');
+    ROute::post('Sequrity/post/new/password','SequrityController@postNewPassword');
+    Route::post('Admin/post/new/icon', 'AdminController@postNewIcon');
     Route::post('Request/post/allow', 'RequestController@postRequestAllow');
     Route::post('Request/post/ignore', 'RequestController@postRequestIgnore');
     Route::get('Talk/get', 'TalkController@getAllFriend');
@@ -32,5 +37,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('Talk/imagePost', 'TalkController@imagePostRequest');
     Route::post('Talk/upDateReadFlg', 'TalkController@upDateReadFlg');
     Route::post('TimeLine/post', 'TimeLineController@tweetInsert');
-    Route::post('TimeLine/get','TimeLineController@getTweetData');
+    Route::get('TimeLine/get','TimeLineController@getTweetData');
+    Route::get('logout', 'Auth\LoginController@logout', function () {
+        return abort(404);
+    });
 });

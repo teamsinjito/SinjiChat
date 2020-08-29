@@ -35,13 +35,21 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
+        //リダイレクト
+        $this->mapRedirectRoutes();
+
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
 
         //
     }
-
+    protected function mapRedirectRoutes()
+    {
+        Route::middleware('web')
+          ->namespace($this->namespace)
+          ->group(base_path('routes/redirect.php'));
+    }
     /**
      * Define the "web" routes for the application.
      *

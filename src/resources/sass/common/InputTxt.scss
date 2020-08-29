@@ -12,6 +12,16 @@
             box-shadow: none;
         }
     }
+    .input-pass{
+        font-family: "myfont-password";
+        letter-spacing: 1px;
+
+        border: 1px solid $gray;
+        &:focus {
+            outline: none !important;
+            box-shadow: none;
+        }
+    }
     .name-txt{
         height: 30px;
         @include pc{width: 75%;}
@@ -46,6 +56,10 @@
         @include phone{width: 90% !important;}
         border-radius: 25px;
     }
+    .input-underline{
+        border: none!important;
+        border-bottom: 1px solid $gray!important;
+    }
     .error-txt{
         font-family: 'myfont';
         color: $red;
@@ -56,6 +70,10 @@
     font-family: 'myfont';
     color: $red;
     position: absolute;
+}
+.position-error-txt{
+    @include pad{top: 40% !important;}
+    @include phone{top: 30% !important;}
 }
 .input-filter-margin{
     @include pc{
