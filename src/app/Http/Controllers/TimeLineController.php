@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\TimeLine;
-use Intervention\Image\Facades\Image;
 use App\Http\Traits\EditImage;
 
 class TimeLineController extends Controller
@@ -48,18 +47,51 @@ class TimeLineController extends Controller
         }
     }
 
-    public function getTweetData(Request $request)
+    public function getTweetData()
     {
         try{
             // 最新データを10件取得
-            $timeLineData = DB::table('time_lines')
-            ->orderBy('id', 'DESC')
-            ->take(10)
-            ->get();
+            $timeLineData = DB::table('time_lines as t')
+                        ->join('users as u',function($join){
+                            $join->on('u.id','=','t.user_id');
+                        })
+                        ->select('t.id','u.name','t.message','t.image')
+                        ->orderBy('t.id', 'DESC')
+                        ->take(10)
+                        ->get();
+                        
+            return Response::json($timeLineData);
+
+
         }
         catch(\Exception $e){
+
             return($e);
+
         }
-        return($timeLineData);
+    }
+    public function getOldTweetData(Request $request)
+    {
+        try{
+            // 最新データを10件取得
+            $timeLineData = DB::table('time_lines as t')
+                        ->join('users as u',function($join){
+                            $join->on('u.id','=','t.user_id');
+                        })
+                        ->where('t.id','<',$request->id)
+                        ->select('t.id','u.name','t.message','t.image')
+                        ->orderBy('t.id', 'DESC')
+                        ->take(10)
+                        ->get();
+                        
+            return Response::json($timeLineData);
+
+
+        }
+        catch(\Exception $e){
+
+            return($e);
+
+        }
     }
 }

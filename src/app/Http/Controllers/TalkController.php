@@ -3,46 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Talk;
-use App\GroupList;
 use App\NewMessage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
-use Intervention\Image\Facades\Image;
+
 
 class TalkController extends Controller
 {
-    public function getAllFriend()
+
+    //スタンプ一覧取得
+    public function getAllStamp()
     {
-        //友達リストを取得
-        try{
-            $friendListId=DB::table('friend_lists as f')
-            ->join('users as u',function($join){
-                $join->on('u.id','=','f.to_user_id')
-                ->where('f.from_user_id','=',Auth::user()->id)
-                ->where('f.status','=',3);
-            });
 
-            $friendList=$friendListId
-            ->select('u.icon','u.name','f.room_id as id','u.profile','f.status')
+        $stampList = DB::table('stamp_lists')
+            ->select('stamp as icon')
             ->get();
 
-            $talkList=$friendListId->leftjoin('talks as t',function($join){
-                $join->on('f.room_id','=','t.room_id');
-            })
-            ->select('t.room_id','t.message','t.image','t.from_user_id','t.created_at')
-            ->latest()
-            ->get();
+        return ($stampList);
 
-            return Response::json(['friend'=>$friendList,'talk'=>$talkList]);
-
-        }catch(\Exception $e){
-            return($e);
-
-        }
     }
+
     public function postRequest(Request $request)
     {
         DB::beginTransaction();
@@ -51,6 +33,7 @@ class TalkController extends Controller
             //new_messagesテーブルに追加
             $group_user_id = DB::table('group_lists')
                             ->where('room_id','=',$request->id)
+                            ->where('to_user_id','<>',Auth::user()->id)
                             ->select('to_user_id');
             $others_user_id=DB::table('friend_lists')
                             ->where('room_id','=',$request->id)
@@ -90,6 +73,7 @@ class TalkController extends Controller
             //new_messagesテーブルに追加
             $group_user_id = DB::table('group_lists')
                             ->where('room_id','=',$request->id)
+                            ->where('to_user_id','<>',Auth::user()->id)
                             ->select('to_user_id');
             $others_user_id=DB::table('friend_lists')
                             ->where('room_id','=',$request->id)

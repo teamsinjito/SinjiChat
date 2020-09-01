@@ -1,4 +1,4 @@
-import React,{ useState, useContext, Fragment } from 'react';
+import React,{ useState, useEffect,useContext, Fragment } from 'react';
 import {PageHeaderTitle as HeaderTitle,PageHeaderSubTitle as HeaderSubTitle} from '../Common/PageHeader';
 import {InputFilterTxt} from '../Common/InputTxt';
 import ImageList from '../Common/ImageList';
@@ -10,15 +10,33 @@ import {Store,Provider} from '../components/store'
 
 export const TalkIndex = () => {
 
+    
     const {state, dispatch} = useContext(Store)　//store参照
     const [value,setValue] = useState("")  //テキストボックス入力値
     const [view ,setView] = useState(false) //トーク画面表示フラグ
     const [openDom,setDom]=useState("") //トーク画面DOM
 
+    useEffect(() => {
+        axios
+            .get('/Talk/get/stamp')
+            .then((res) => {
+                if(res.data.length > 0){
+                    dispatch({type:'GET_ALL_STAMP_LIST',payload:res.data})
+
+                }
+    
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+    },[]);
+
     //トーク表示
     function openModal(e){
         const index =e.currentTarget.attributes.getNamedItem('data-index').value
         document.body.setAttribute('style', 'overflow: hidden;');
+        document.addEventListener( 'touchmove',scrollOff, false);
         //Domを構築
         setDom(<Talk 
                 icon={state.intervalGetData.myFriendList[index].icon}
@@ -37,12 +55,15 @@ export const TalkIndex = () => {
     function closeModal(){
 
         document.body.removeAttribute('style', 'overflow: hidden;')
+        document.removeEventListener( 'touchmove', scrollOff, false );
         setDom("")
         //トーク画面非表示
         setView(false);
 
     }
-
+    var scrollOff = function( e ){
+        e.preventDefault();
+    }
     return (
 
         <Fragment>
@@ -82,7 +103,7 @@ export const TalkIndex = () => {
                 visible={view}
                 onClose={closeModal}
                 animation="slideUp"
-                className="modal2-area"
+                className="modal-area"
             >
                 {openDom}
             </Rodal>

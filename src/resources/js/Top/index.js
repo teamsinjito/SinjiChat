@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import {Title} from '../Common/Title';
 import {Sidebar} from '../Common/Sidebar';
 import {Underbar} from './Underbar';

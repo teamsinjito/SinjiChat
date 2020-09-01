@@ -30,6 +30,12 @@
         margin: auto;
     }
 }
+.friend-profile{
+    @include phone{
+        width: 50%;
+        margin: auto;
+    }
+}
 .add-group-list{
     position: relative;
     .selected-message-wrapper{
@@ -52,12 +58,7 @@
 }
 .slick-next:before, .slick-prev:before {
     color: #000 !important;
-    // @include pad{
-    //     display: none;
-    // };
-    // @include phone{
-    //     display: none;
-    // };
+
 }
 .slick-prev:before {
     content: '\03c' !important;

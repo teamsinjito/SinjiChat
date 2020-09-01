@@ -8,6 +8,6 @@ class StampList extends Model
 {
     //
     protected $fillable = [
-        'stamp'
+        'stamp','created_at','updated_at'
     ];
 }

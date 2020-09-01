@@ -11,7 +11,10 @@ const reducer = (state = {}, action={}) => {
                         myChatHistory:action.payload.talk,
                         request:action.payload.request,
                         firstLoadFlg:false,
-                        me:action.payload.me
+                        me:action.payload.me,
+                        timeLine:action.payload.timeLine,
+                        newMessagesCnt:action.payload.newMessagesCnt
+
                     }
                 }
             }
@@ -27,7 +30,11 @@ const reducer = (state = {}, action={}) => {
                 ...state,
                 allMyFriend:action.payload
             }
-
+        case 'GET_ALL_STAMP_LIST':
+            return{
+                ...state,
+                allStamps:action.payload
+            }
         case 'LOOK_AHEAD':
             var newMessage = state.intervalGetData.myChatHistory.concat([action.payload])
 

@@ -1,4 +1,4 @@
-import React, { useState, useContext,Fragment  } from 'react';
+import React, { useState  } from 'react';
 import {ProfileHeader,ProfileTxtLabel} from '../Common/ProfileHeader';
 import {Button} from '../Common/Button';
 import axios from "axios";
@@ -33,14 +33,12 @@ export const Request = (props) => {
 
 
                 setButton(button[2])   
-                //updateStatusButton(res.data);
 
             })
             .catch(error => {
 
                 setButton(button[3])
                 setButtonIgnore(buttonIgnore[0])
-                //updateStatusButton(error)
 
             })
     }
@@ -62,37 +60,37 @@ export const Request = (props) => {
 
 
                 setButtonIgnore(buttonIgnore[2])   
-                //updateStatusButton(res.data);
 
             })
             .catch(error => {
 
                 setButtonIgnore(buttonIgnore[3])
                 setButton(button[0])
-                //updateStatusButton(error)
 
             })
     }
     return(
         <div className="container form-group mt-5" >
             <div className="row">
-                <div className="col-xl-8 col-12">    
+                <div className="col-xl-8 col-md-6 col-12"  style={{display:"flex",flexDirection:"column",justifyContent:"space-between"}}>   
                     <ProfileHeader title={`${props.type}-Profile`}/>
                     <ProfileTxtLabel label={props.name}/>
                     <ProfileTxtLabel label={props.profile}/>
                     <br></br>
                     <div className="row">
-                        <div className="col-xl-4 p-0 pc-show">
+                        <div className="col-4 p-0 pc-show">
                             <Button btn={btn} onclick={requestOK}/>
                         </div>
-                        <div className="col-xl-4 p-0 ml-3 pc-show">
+                        <div className="col-4 p-0 ml-3 pc-show">
                             <Button btn={btnIgnore} onclick={requestNG}/>
                         </div>
                     </div>
 
                 </div>
-                <div className="col-xl-4 col-12">
-                    <img src={props.icon} className="w-100"/>
+                <div className="col-xl-4 col-md-6 col-12">
+                    <div className="text-center friend-profile">
+                        <img src={props.icon} className="w-100"/>
+                    </div>
                 </div>
             </div>
             <div className="pc-none mt-5 p-0">

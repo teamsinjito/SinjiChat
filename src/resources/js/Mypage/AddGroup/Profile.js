@@ -1,4 +1,4 @@
-import React, { useState, useContext,Fragment  } from 'react';
+import React, { useState, useContext  } from 'react';
 import {PageHeaderTitle as HeaderTitle,PageHeaderSubTitle as HeaderSubTitle} from '../../Common/PageHeader';
 import {ProfileHeader} from '../../Common/ProfileHeader';
 import {InputNameTxt,InputProfileTxt} from '../../Common/InputTxt';
@@ -6,11 +6,10 @@ import {CanvasImage} from '../../Common/CanvasImage';
 import {Button} from '../../Common/Button';
 import axios from "axios";
 import {RadioGroup, Radio} from 'react-radio-group'
-import {Store,Provider} from '../../components/store'
 
 export const AddGroupProfile = (props) => {
 
-    const {state, dispatch} = useContext(Store)　//store参照
+
     const [nameValue,setNameValue] = useState("")  //テキストボックス入力値
     const [profileValue,setProfileValue] = useState("")  //テキストボックス入力値
     const [image,setImage] = useState("") //プロフィール画像
@@ -74,12 +73,11 @@ export const AddGroupProfile = (props) => {
                 })
                 .then((res) => {
 
-                    console.log("STATUS_CODE:"+res.data)
                     setButton(button[res.data])
 
                 })
                 .catch(error => {
-                    console.log("STATUS_CODE:"+error)
+                    console.log(error)
                     setButton(button[error])
                 })
         }
@@ -94,7 +92,7 @@ export const AddGroupProfile = (props) => {
             <HeaderTitle title="Add-Group"/>
             <HeaderSubTitle title="グループのプロフィールを設定しましょう"/>
             <div className="row" style={{height:"60%"}}>
-                <div className={`col-sm-6 col-md-8 col-12 visibleProfile-${selectedMenu}`}>    
+                <div className={`col-xl-8 col-md-6 col-12 visibleProfile-${selectedMenu}`}  style={{display:"flex",flexDirection:"column",justifyContent:"space-between"}}>    
                     <ProfileHeader title="Profile"/>
                     <InputNameTxt 
                         value={nameValue} 
@@ -112,7 +110,7 @@ export const AddGroupProfile = (props) => {
                         <Button btn={btn} onclick={requestGroup}/>
                     </div>
                 </div>
-                <div className={`col-sm-6 col-md-4 col-12 p-0 visibleImage-${selectedMenu}`}>
+                <div className={`col-xl-4 col-md-6 col-12 p-0 visibleImage-${selectedMenu}`}>
                     <CanvasImage setImage={setImage}/>
                 </div>
             </div>

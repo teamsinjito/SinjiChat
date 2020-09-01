@@ -2,6 +2,7 @@ import React,{ useState, useContext,useRef,useEffect, Fragment } from 'react';
 import Moment from 'moment';
 import FileInputComponent from 'react-file-input-previews-base64'
 import {Store,Provider} from '../components/store'
+import {Loading} from '../Common/Loading';
 
 export const Talk = (props) =>{
 
@@ -13,11 +14,13 @@ export const Talk = (props) =>{
     const [selectedStamp,setSelectedStamp]=useState('')
     const [stampPreview,setStampPreview]=useState('')
     const {state, dispatch} = useContext(Store)　//store参照
+    
     const messagesEndRef = useRef(null)
 
 
     //トークリストに変更がある場合、既読フラグ更新処理が行われる
     useEffect(updateReadFlg, [state.intervalGetData.myChatHistory.filter(talkFilter => talkFilter.room_id==props.id)]);
+
 
     function visibleProfileArea(){
 
@@ -44,12 +47,11 @@ export const Talk = (props) =>{
                 })
                 .then((res) => {
                     
-                    console.log("success:既読フラグ更新")
                     messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
 
                 })
                 .catch(error => {
-                    console.log('error:既読フラグ更新 '+error)
+                    console.log(error)
         
                 })
         }
@@ -134,7 +136,6 @@ export const Talk = (props) =>{
                 .then((res) => {
 
                     dispatch({type:'END_SEND_TALK'})
-                    console.log("送信成功")
                     messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
                 })
                 .catch(error => {
@@ -161,7 +162,6 @@ export const Talk = (props) =>{
             })
             .then((res) => {
                 dispatch({type:'END_SEND_TALK'})
-                console.log("成功2")
                 messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
 
             })
@@ -184,7 +184,7 @@ export const Talk = (props) =>{
                 />
 
                 <div className={`chat-area col-xl-8 col-12 w-100 ${chatVisible}`}>
-                    <div className="chat-area-in w-100">
+                    <div className="chat-area-in w-100 h-100">
                         <ChatHeader visible={visibleProfileArea} name={props.name}/>
 
                         <div className={`line-bc txt_XS ${stampOpen}-bc`} id="talk-modal" onClick={closeStampList}>
@@ -233,6 +233,7 @@ export const Talk = (props) =>{
                                 />
                             </div>
                             <StampListArea 
+                                stamps = {state.allStamps}
                                 openFlg = {stampOpen}
                                 preview = {previewStamp}
                                 previewFlg = {stampPreview}
@@ -365,7 +366,7 @@ const TextAreaWithBtn = ({onChange,value,sendMessage,canSend}) => {
 
     return(
         <Fragment>
-            <div  className="txt-input" >
+            <div  className="txt-input w-100" >
 
                 <textarea type="text" className="w-100"
                     onChange={onChange} 
@@ -391,26 +392,23 @@ const TextAreaWithBtn = ({onChange,value,sendMessage,canSend}) => {
     )
 }
 
-const StampListArea = ({openFlg,preview,previewFlg,reset,select,send}) => {
+const StampListArea = ({stamps,openFlg,preview,previewFlg,reset,select,send}) => {
 
-    const stamps =[
-        {icon:'/img/stamp/fusagikomu_businessman.png'},
-        {icon:'/img/stamp/job_taisyoku_daikou_man.png'},
-        {icon:'/img/stamp/salaryman_money.png'},
-        {icon:'/img/stamp/skip_businessman.png'},
-        {icon:'/img/stamp/yaruki_moeru_businessman.png'},
-        {icon:'/img/stamp/yaruki_moetsuki_businessman.png'}
-    ]
-
+    const [message,setMessage] =useState(<Loading h="h-75" text=""/>)
+    
     return(
         <div className="stamp-area">
-            <div className={`stamp-area-in text-center ${openFlg}`}>
-                {stamps.map((stamp,index)=>
-                    <div className="stamp col-4" key={index}>
-                        <img src={stamp.icon} alt='' className="stamp-icon" onClick={preview}/>
-                    </div>
-                )}
-            </div>
+                <div className={`stamp-area-in text-center ${openFlg}`}>
+                {stamps.length > 0 ?
+                    stamps.map((stamp,index)=>
+
+                        <div className="stamp col-4" key={index}>
+                            <img src={stamp.icon} alt='' className="stamp-icon" onClick={preview}/>
+                        /</div>
+                    )
+                    :<div className="w-100 text-center">{message}</div>
+                    }
+                </div>
             <div className={`text-center stamp-preview white_touka ${previewFlg}`} onClick={reset}>
                 
                 <div className="col-4">

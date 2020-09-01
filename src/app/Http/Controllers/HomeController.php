@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
@@ -148,11 +147,45 @@ class HomeController extends Controller
                                     ->orderBy('created_at','DESC')
                                     ->get();
 
+            //未読トーク数を取得
+            $notYetGroupReedCnt=DB::table('new_messages as n')
+                        ->join('group_lists as gl',function($join){
+                            $join->on('n.room_id','=','gl.room_id')
+                            ->where('gl.status',2)
+                            ->where('gl.to_user_id',Auth::user()->id);
+                        })                    
+                        ->where('n.to_user_id',Auth::user()->id)
+                        ->where('n.read_flg',0)
+                        ->count();
+
+            $notYetFriendReedCnt=DB::table('new_messages as n')
+                        ->join('friend_lists as f',function($join){
+                            $join->on('n.room_id','=','f.room_id')
+                            ->where('f.status',3)
+                            ->where('f.to_user_id',Auth::user()->id);
+                        })                    
+                        ->where('n.to_user_id',Auth::user()->id)
+                        ->where('n.read_flg',0)
+                        ->count();
+            $notYetReedCnt=$notYetFriendReedCnt + $notYetGroupReedCnt;
+            //タイムライン最新10件を取得
+            // 最新データを10件取得
+            $timeLineData = DB::table('time_lines as t')
+                        ->join('users as u',function($join){
+                            $join->on('u.id','=','t.user_id');
+                        })
+                        ->select('t.id','u.name','t.message','t.image')
+                        ->orderBy('t.id', 'DESC')
+                        ->take(10)
+                        ->get();
+
             return Response::json([
                 'friend'=>$friendGroupList,
                 'talk'=>$friendGroupTalkList,
                 'request'=>$friendAndGroupRequest,
-                'me'=>$me
+                'me'=>$me,
+                'timeLine'=>$timeLineData,
+                'newMessagesCnt'=>$notYetReedCnt
             ]);
 
         }catch(\Exception $e){

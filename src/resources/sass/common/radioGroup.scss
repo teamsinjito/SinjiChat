@@ -10,11 +10,9 @@ radio-group{
     @include phone{display: block;}
 }
 .visibleImage-profile,.visibleProfile-image{
-    @include phone{display: none;}
+    @include phone{display: none!important;}
 }
-// input[type=radio]{
-//     display: none;
-// }
+
 
 .radio-mark{
     position: relative; /* ボックスの位置を指定する */

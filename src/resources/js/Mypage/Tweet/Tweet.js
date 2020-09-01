@@ -1,15 +1,13 @@
-import React, { useState, useContext,Fragment  } from 'react';
+import React, { useState, useContext  } from 'react';
 import {PageHeaderTitle as HeaderTitle,PageHeaderSubTitle as HeaderSubTitle} from '../../Common/PageHeader';
 import {InputTweetTxt} from '../../Common/InputTxt';
 import {CanvasImage} from '../../Common/CanvasImage';
 import {Button} from '../../Common/Button';
 import axios from "axios";
-import {RadioGroup, Radio} from 'react-radio-group'
-import {Store,Provider} from '../../components/store'
+import {RadioGroup, Radio} from 'react-radio-group' 
 
 export const Tweet = () => {
 
-    const {state, dispatch} = useContext(Store)　//store参照
     const [message,setMessage] = useState("")  //テキストボックス入力値
     const [image,setImage] = useState("") //画像
     const [errorMessage,setErrorMessage]=useState("")
@@ -26,13 +24,14 @@ export const Tweet = () => {
     function postTweet(){
 
         var errorFlg =[]
+        setErrorMessage("");
 
         //本文のバリデーションチェック
         if(message == ""){
             errorFlg.push(true)
             setErrorMessage("本文は入力必須です");
 
-        }else if(message.length > 20){
+        }else if(message.length > 250){
             errorFlg.push(true)
             setErrorMessage("本文は250文字以下で入力してください");        
         }else{
@@ -61,11 +60,11 @@ export const Tweet = () => {
                 })
                 .then((res) => {
 
-                    setButton(2)
+                    setButton(button[2])
 
                 })
                 .catch(error => {
-                    setButton(3)
+                    setButton(button[3])
                 })
         }
 
