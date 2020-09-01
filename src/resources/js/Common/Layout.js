@@ -13,6 +13,7 @@ const Layout = (props) => {
     //Request表示
     function openModal(e){
         document.body.setAttribute('style', 'overflow: hidden;');
+        document.addEventListener( 'touchmove',scrollOff, false);
         //Domを構築
         setDom(<RequestIndex />)
         //Request画面表示
@@ -24,12 +25,15 @@ const Layout = (props) => {
     function closeModal(){
 
         document.body.removeAttribute('style', 'overflow: hidden;')
+        document.removeEventListener( 'touchmove', scrollOff, false );
         setDom("")
         //Request画面非表示
         setView(false);
 
     }
-
+    var scrollOff = function( e ){
+        e.preventDefault();
+    }
     return (
         <Fragment>
             <div className={`layout  layout-${props.layouts}`}>
@@ -50,7 +54,7 @@ const Layout = (props) => {
                     offset={0}
                     duration= {1000}
                     className={`menu  text-center txt_L ${props.layouts}`}
-                    ><span>Talk</span></Link>
+                    ><span>{state.intervalGetData.newMessagesCnt > 0 ? "Talk(+"+state.intervalGetData.newMessagesCnt+")":"Talk"}</span></Link>
                 <Link 
                     activeClass="active" 
                     to="/TimeLine" 

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import {RadioGroup, Radio} from 'react-radio-group';
-import {ProfileTxtLabel} from './ProfileHeader';
+import {TimeLineTitleLabel,TimeLineTxtLabel} from './ProfileHeader';
 
 const ImageList = ({listElement,menu,index,onClick,selectedMenu,method}) =>{
 
@@ -10,6 +10,7 @@ const ImageList = ({listElement,menu,index,onClick,selectedMenu,method}) =>{
     const ADDFRIEND="AddFriend"
     const REQUEST="Request"
     const TIMELINE="TimeLine"
+    const ADMIN = "Administrator"
 
     if(menu　==　TALK){
 
@@ -101,24 +102,24 @@ const ImageList = ({listElement,menu,index,onClick,selectedMenu,method}) =>{
     else if(menu== TIMELINE){
         return(
         // ★★★表示できたらipad用のcol設定追加して
-        <div className="container form-group mt-5">
-            <div className="row">
+        <div className="container form-group mt-3">
+            <div className="row" style={{margin:"10%",height:"348.078px"}}>
                 {/* 左側要素 */}
-                <div className="col-xl-8 col-12">
+                <div className={`col-sm-6 offset-md-1 col-md-6 col-12 h-100 visibleProfile-${selectedMenu}`} style={{overflow:"scroll"}}>
                     {/* タイトル */}
-                    <ProfileTxtLabel label="テスト"/>
+                    <TimeLineTitleLabel label={listElement.name + " の名言"}/>
                     {/* 本文 */}
-                    <ProfileTxtLabel label={listElement.message}/>
+                    <TimeLineTxtLabel label={listElement.message}/>
                 </div>
                 
                 {/* 要素右側 */}
-                <div className="col-xl-4 col-12">
+                <div className={`col-sm-6 col-md-4 col-12 p-0 h-100 visibleImage-${selectedMenu}`}>
                     <img src={listElement.image} className="w-100"/>
                 </div>
 
                 {/* ラジオボタン(スマホレイアウト時のみ表示) */}
-                <div className="row  pc-none w-100">
-                    <div className="offset-3 col-6 p-0 mt-5">
+                <div className="pc-none w-100">
+                    <div className="offset-3 col-6 p-0 mt-3">
                         <RadioGroup Component="radio-group" selectedValue={selectedMenu} onChange={method}>
                         <label className={`radio-mark mark-profile-${selectedMenu}`}>
                             <Radio value="profile"/>
@@ -132,6 +133,19 @@ const ImageList = ({listElement,menu,index,onClick,selectedMenu,method}) =>{
                 
             </div>
         </div>
+        )
+    }    
+    else if(menu== ADMIN){
+
+        return(
+            <div className="user-list">
+                <img 
+                    src={listElement} 
+                    alt=''  
+                    className="w-100 pr-2 pl-2" 
+
+                /> 
+            </div>
         )
     }
     else{

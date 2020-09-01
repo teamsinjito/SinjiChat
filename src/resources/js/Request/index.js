@@ -1,4 +1,4 @@
-import React,{ useState, useContext, useEffect,Fragment } from 'react';
+import React,{ useState, useContext,Fragment } from 'react';
 import {PageHeaderTitle as HeaderTitle,PageHeaderSubTitle as HeaderSubTitle} from '../Common/PageHeader';
 import {InputFilterTxt} from '../Common/InputTxt';
 import ImageList from '../Common/ImageList';
@@ -19,7 +19,8 @@ export const RequestIndex = () => {
         const index =e.currentTarget.attributes.getNamedItem('data-index').value
 
         document.body.setAttribute('style', 'overflow: hidden;');
-
+        document.addEventListener( 'touchmove',scrollOff, false);
+        
         //Domを構築
         setDom(<Request 
                 icon={state.intervalGetData.request[index].icon}
@@ -37,12 +38,15 @@ export const RequestIndex = () => {
     function closeModal(){
 
         document.body.removeAttribute('style', 'overflow: hidden;')
+        document.removeEventListener( 'touchmove', scrollOff, false );
         setDom("")
         //Requestプロフィール画面非表示
         setView(false);
 
     }
-
+    var scrollOff = function( e ){
+        e.preventDefault();
+    }
 
     return (
         <Fragment>
@@ -79,7 +83,7 @@ export const RequestIndex = () => {
                 visible={view}
                 onClose={closeModal}
                 animation="slideUp"
-                className="modal2-area flex-area"
+                className="modal-area flex-area"
             >
                 {openDom}
             </Rodal>

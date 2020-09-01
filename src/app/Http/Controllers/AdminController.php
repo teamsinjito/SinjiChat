@@ -33,4 +33,27 @@ class AdminController extends Controller
             return($e->message);
         }
     }
+
+    public function postNewStamp(Request $request)
+    {
+        DB::beginTransaction();
+        $now = Carbon::now();
+
+        try{
+            $newIcons = array();
+            foreach($request->icon as $icon){
+
+                $image = $this->ResizeStamp($icon);
+
+                array_push($newIcons,array('stamp'=>$image, 'created_at' => $now, 'updated_at' => $now));
+            }
+
+            $ci = DB::table('stamp_lists')->insert($newIcons);
+
+            DB::commit();
+        }catch(\Exception $e){
+            DB::rollback();
+            return($e->message);
+        }
+    }
 }

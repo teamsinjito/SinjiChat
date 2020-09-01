@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    <form class="col-md-5 h-100 form-area white_touka text-center" method="POST" action="{{ route('login') }}">
+    <form class="col-xl-5 col-12 h-100 form-area white_touka text-center" method="POST" action="{{ route('login') }}">
         <h1 class="title_B mt-5">SinjiChat</h1>
         <div class="form-inner-area h-50">
 

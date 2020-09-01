@@ -1,13 +1,5 @@
 .talk-area-in{
     display: flex;
-    // @include pc{
-    //     flex-direction: row;
-    // }
-    // @include phone{
-    //     flex-direction: column;
-    // }
-    // padding-left: 15%;
-    // margin: 0!important;
     
     .show-active{
         @include pc{
@@ -136,7 +128,7 @@
                     height: 700px;
                 }
                 @include pad{
-                    height: 600px;
+                    height: 1300px;
                 }
                 @include phone{
                     height: 600px;
@@ -144,6 +136,8 @@
     
                 .date-header{
                     text-align: center;
+                    margin-top: 10%;
+                    margin-bottom: 10%;
                 }
                 .balloon6 {
                     width: 100%;
@@ -230,7 +224,6 @@
                         }
                         span{
                             display: inline-block;
-                            // padding-top:10px;
                             padding-left: 5px;
     
                         }
@@ -253,7 +246,7 @@
             
                         }
                         @include phone{
-                            max-width: 225px;
+                            max-width: 150px;
             
                         }
                         margin: 0;
@@ -385,9 +378,7 @@
                         }
                         padding-right: 0!important;
                     }
-                    .fa-location-arrow{
-        
-                    }
+
                 }
                 .stamp-area{
                     

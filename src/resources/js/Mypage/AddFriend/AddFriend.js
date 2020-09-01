@@ -101,7 +101,7 @@ export const AddFriend = () => {
                 visible={view}
                 onClose={closeModal}
                 animation="slideUp"
-                className="modal2-area flex-area"
+                className="modal-area flex-area"
             >
                 {openDom}
             </Rodal>

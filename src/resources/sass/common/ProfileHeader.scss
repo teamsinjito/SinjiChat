@@ -19,3 +19,17 @@
         margin-bottom: 5%;
     }
 }
+
+.timeline-txt{
+    font-family: 'myfont';
+}
+.timeline-header{
+    text-align: center;
+}
+.timeline-message{
+    margin-top: 15%;
+    line-height: 1.8;
+    word-break: break-all;
+    white-space: pre-wrap;
+    @include phone{line-height: 1.5;}
+}

@@ -1,10 +1,9 @@
-import React,{ useState, useContext,useRef,useEffect, Fragment } from 'react';
+import React,{ useRef,useEffect } from 'react';
 import FileInputComponent from 'react-file-input-previews-base64'
 
 export const CanvasImage = (props) => {
 
-    const canvasWidth = "368";
-    const canvasHeight = "554";
+
     const canvasRef = useRef(null);
 
     useEffect(() => {
@@ -25,9 +24,7 @@ export const CanvasImage = (props) => {
 
         bgImg.onload = function () {
             context.globalCompositeOperation = 'source-over';
-            console.log(bgImg.width);
-            console.log(bgImg.height);
-            // context.drawImage(bgImg,(canvasWidth-bgImg.width)/2,(canvasHeight-bgImg.height)/2, bgImg.width, bgImg.height);
+
             context.drawImage(bgImg,0,0, canvas.width, canvas.height);
         };
         bgImg.src = fileBase64;
@@ -43,9 +40,7 @@ export const CanvasImage = (props) => {
 
         bgImg.onload = function () {
             context.globalCompositeOperation = 'source-over';
-            console.log(bgImg.width);
-            console.log(bgImg.height);
-            // context.drawImage(bgImg,(canvasWidth-bgImg.width)/2,(canvasHeight-bgImg.height)/2, bgImg.width, bgImg.height);
+
             context.drawImage(bgImg,0,0, canvas.width, canvas.height);
         };
         bgImg.src = file.base64;

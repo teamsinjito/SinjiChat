@@ -1,4 +1,4 @@
-import React, { useState, useContext,Fragment  } from 'react';
+import React from 'react';
 import { animateScroll as scroll } from 'react-scroll';
 export const Footer = () => {
 

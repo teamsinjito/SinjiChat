@@ -19,8 +19,6 @@ export const AddGroup = () => {
     const [openDom,setDom]=useState("") //プロフィール画面DOM
     const [message,setMessage] =useState(<Loading h="h-75" text="友達リスト取得中..."/>)
     const [selectUserId,setSelectUserId] = useState([])
-    // const button=[['次へ','btn-lock','none'],
-    //                 ['次へ','btn-active','none']];
     const button=[['Make Profile','btn-lock'],
                     ['Make Profile','btn-active']];
     const [btn,setButton] = useState(button[0])

@@ -1,4 +1,4 @@
-import React, { useState, useContext,Fragment  } from 'react';
+import React, { useState, useContext  } from 'react';
 import {PageHeaderTitle as HeaderTitle,PageHeaderSubTitle as HeaderSubTitle} from '../../Common/PageHeader';
 import {ProfileHeader} from '../../Common/ProfileHeader';
 import {InputNameTxt,InputProfileTxt} from '../../Common/InputTxt';
@@ -93,7 +93,7 @@ export const Option = () => {
             <HeaderTitle title="Option"/>
             <HeaderSubTitle title="プロフィールを編集することができます"/>
             <div className="row" style={{height:"60%"}}>
-                <div className={`col-sm-6 col-md-8 col-12 visibleProfile-${selectedMenu}`}>    
+                <div className={`col-xl-8 col-md-6 col-12 visibleProfile-${selectedMenu}`} style={{display:"flex",flexDirection:"column",justifyContent:"space-between"}}>    
                     <ProfileHeader title="Profile"/>
                     <InputNameTxt 
                         value={nameValue} 
@@ -111,7 +111,7 @@ export const Option = () => {
                         <Button btn={btn} onclick={requestGroup}/>
                     </div>
                 </div>
-                <div className={`col-sm-6 col-md-4 col-12 p-0 visibleImage-${selectedMenu}`}>
+                <div className={`col-xl-4 col-md-6 col-12 p-0 visibleImage-${selectedMenu}`}>
                     <CanvasImage 
                         setImage={setImage}
                         initialImage={image}

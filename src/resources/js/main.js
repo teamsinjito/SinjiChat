@@ -1,4 +1,4 @@
-import React, { useState, useContext,useRef }  from 'react';
+import React, { useContext }  from 'react';
 import { useInView } from "react-intersection-observer";
 import useInterval from 'use-interval';
 import ReactDOM from 'react-dom';
@@ -8,7 +8,6 @@ import {TalkIndex as Talk} from './Talk/index';
 import {TimeLineIndex as TimeLine} from './TimeLine/index';
 import {Footer} from './Footer/Footer';
 import {Loading} from './Common/Loading';
-import {RequestIndex as Request} from './Request/index';
 import {SideBarNav} from './Nav/SideBarNav';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -29,7 +28,7 @@ const MainArea=()=>{
             .then((res) => {
                         
                 dispatch({type:'GET_INTERVAL_DATA',payload:res.data})
-                console.log(state)
+
 
             })
             .catch(error => {

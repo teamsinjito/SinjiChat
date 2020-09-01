@@ -37,7 +37,6 @@ a:hover{
     }
 }
 .pc-show{
-    // @include pad{display: none!important;}
     @include phone{display: none!important;}
 }
 .pc-none{

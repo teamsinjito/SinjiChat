@@ -1,4 +1,4 @@
-import React, { useState, useContext,Fragment  } from 'react';
+import React from 'react';
 import MDSpinner from 'react-md-spinner';
 
 export const Loading = (props) => {

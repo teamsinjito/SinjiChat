@@ -9,9 +9,8 @@ import {Option} from './Option/Option';
 import {Sequrity} from './Sequrity/Sequrity';
 import {Admin} from './Admin/Admin';
 import Rodal from 'rodal';
-
 import {Store,Provider} from '../components/store'
-import { set } from 'lodash';
+
 
 
 export const MypageIndex = () => {
@@ -32,7 +31,7 @@ export const MypageIndex = () => {
     useEffect(() => {
 
         if(state.intervalGetData.me[0].admin == admin){
-            console.log('admin')
+
             var newList = list.concat({icon:'/img/Admin.png',name:'管理者画面を表示します',id:'menu6'});
             setList(newList);
         }
@@ -59,6 +58,7 @@ export const MypageIndex = () => {
         //モーダル表示
         setView(true);
         document.body.setAttribute('style', 'overflow: hidden;')
+        document.addEventListener( 'touchmove',scrollOff, false);
 
     }
 
@@ -66,12 +66,16 @@ export const MypageIndex = () => {
     function closeModal() {
         history.replaceState('','','/')
         setDom("")
+
         //モーダル非表示
         setView(false);
         document.body.removeAttribute('style', 'overflow: hidden;')
-
+        document.removeEventListener( 'touchmove', scrollOff, false );
     }
 
+    var scrollOff = function( e ){
+        e.preventDefault();
+    }
     return (
         <div className="mypage-area h-100 mt-5" name="/Mypage">
             {/* ヘッダー */}
@@ -100,7 +104,7 @@ export const MypageIndex = () => {
                 visible={view}
                 onClose={closeModal}
                 animation="door"
-                className="modal2-area"
+                className="modal-area"
                 >
                 {openDom}
             </Rodal>
