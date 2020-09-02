@@ -8,6 +8,20 @@
         opacity: .5;
     }
 }
+.labelButton-common{
+    font-family: 'myfont';
+    color: $black;
+    &:hover{
+        cursor: pointer;
+        opacity: .5;
+    }
+}
+.labelButton-border{
+    border-bottom: 1px solid $black;
+}
+a:hover{
+    text-decoration: none!important;
+}
 .btn-lock{
     opacity: .5;
     pointer-events: none;
@@ -23,10 +37,10 @@
     }
 }
 .pc-show{
-    @include pad{display: none!important;}
     @include phone{display: none!important;}
 }
 .pc-none{
     @include pc{display: none!important;}
-    // @include phone{display: none;}
+    @include pad{display: none!important;}
+    @include phone{display: block!important;}
 }

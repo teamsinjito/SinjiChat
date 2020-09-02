@@ -1,13 +1,42 @@
-import React from 'react';
-import { Link } from "react-scroll";
+import React,{ useState, useContext, Fragment }  from 'react';
+import { Link ,} from "react-scroll";
+import {RequestIndex} from '../Request';
+import {Store,Provider} from '../components/store';
+import Rodal from 'rodal';
 
-export default class Layout extends React.Component {
+const Layout = (props) => {
 
+    const {state, dispatch} = useContext(Store)　//store参照
+    const [view,setView] =useState(false)
+    const [openDom,setDom]=useState("") //プロフィール画面DOM
 
-    render() {
-        return (
-            <div className={`layout  layout-${this.props.layouts}`}>
-                {/* {this.props.children} */}
+    //Request表示
+    function openModal(e){
+        document.body.setAttribute('style', 'overflow: hidden;');
+        document.addEventListener( 'touchmove',scrollOff, false);
+        //Domを構築
+        setDom(<RequestIndex />)
+        //Request画面表示
+        setView(true);
+    }
+    function logout(){
+        document.getElementById('logoutId').click();
+    }
+    function closeModal(){
+
+        document.body.removeAttribute('style', 'overflow: hidden;')
+        document.removeEventListener( 'touchmove', scrollOff, false );
+        setDom("")
+        //Request画面非表示
+        setView(false);
+
+    }
+    var scrollOff = function( e ){
+        e.preventDefault();
+    }
+    return (
+        <Fragment>
+            <div className={`layout  layout-${props.layouts}`}>
                 <Link
                     activeClass="active" 
                     to="/Mypage" 
@@ -15,7 +44,7 @@ export default class Layout extends React.Component {
                     smooth={true}
                     offset={0}
                     duration= {1000}
-                    className={`menu txt_L ${this.props.layouts}`}
+                    className={`menu  text-center txt_L ${props.layouts}`}
                     ><span>MyPage</span></Link>
                 <Link 
                     activeClass="active" 
@@ -24,8 +53,8 @@ export default class Layout extends React.Component {
                     smooth={true}
                     offset={0}
                     duration= {1000}
-                    className={`menu txt_L ${this.props.layouts}`}
-                    ><span>Talk</span></Link>
+                    className={`menu  text-center txt_L ${props.layouts}`}
+                    ><span>{state.intervalGetData.newMessagesCnt > 0 ? "Talk(+"+state.intervalGetData.newMessagesCnt+")":"Talk"}</span></Link>
                 <Link 
                     activeClass="active" 
                     to="/TimeLine" 
@@ -33,11 +62,28 @@ export default class Layout extends React.Component {
                     smooth={true}
                     offset={0}
                     duration= {1000}
-                    className={`menu txt_L ${this.props.layouts}`}
+                    className={`menu  text-center txt_L ${props.layouts}`}
                     ><span>TimeLine</span></Link>
-                <Link to="/Request" className={`menu txt_L ${this.props.layouts}`}><span>Request</span></Link>
-                <Link to="/logout" className={`menu txt_L ${this.props.layouts}`}><span>LogOut</span></Link>
+                <Link 
+                    to="/Request" 
+                    onClick={openModal}
+                    className={`menu  text-center txt_L ${props.layouts}`}
+                ><span>{state.intervalGetData.request.length > 0 ? "Request(+"+state.intervalGetData.request.length+")":"Request"}</span>
+                </Link>
+                <Link to="/" onClick={logout} className={`menu  text-center txt_L ${props.layouts}`}><span>LogOut</span></Link>
             </div>
-        )
-    }
+
+            {/* Request画面 */}
+            <Rodal
+                visible={view}
+                onClose={closeModal}
+                animation="door"
+                className="modal-area flex-area"
+            >
+                {openDom}
+            </Rodal>
+        </Fragment>
+    )
 }
+
+export default Layout;

@@ -1,0 +1,39 @@
+.canvas-area{
+    height:100%;
+    position:relative;
+    border: 1px solid $gray !important;
+    @include phone{
+        width: 80%;
+        margin: auto;
+    }
+    input{
+        z-index:10;
+    }
+    .img-wrapper{
+        position:absolute;
+        z-index:10;
+        width: 100%;
+        height:100%;
+        display:flex;
+        align-items:center;
+        justify-content: center; 
+        .img-block{
+            text-align: center;
+            width:100%;
+            .inputImg{
+                width:25%;
+                &:hover{
+                    cursor:pointer;
+                    opacity:.5;
+                }
+            }
+        }
+    }
+    .canvas-inner-wrapper{
+        position:absolute;
+        top:0px;
+        z-index:0;
+        display:flex;
+        justify-content: center;
+    }
+}

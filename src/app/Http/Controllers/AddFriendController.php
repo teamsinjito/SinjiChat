@@ -7,9 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use App\FriendList;
+use illuminate\Support\Facades\Mail;
+use App\Mail\PushNotification;
 
-const STATUSCODE=array(0,1,2,3,4); 
-//0:未申請 1:申請中 2:申請済み 3:友達追加済み 4:申請失敗
+
 
 class AddFriendController extends Controller
 {
@@ -30,20 +31,11 @@ class AddFriendController extends Controller
                         $join->on('u.id','=','f.tid');
                     })
                     ->where('u.id','!=',Auth::user()->id)
+                    ->where('u.admin','=','guest')
                     ->select('u.icon','u.name','u.id','u.profile',
                     DB::raw('COALESCE(f.st,0) as status'))
                     ->get();
 
-            //友達以外を表示
-            // $users = DB::table('users as u')
-            //     ->whereNotIn('u.id',DB::table('friend_lists as f')
-            //         ->where('f.from_user_id','=',Auth::user()->id)
-            //         ->where('f.status','=',STATUSCODE[3])
-            //         ->select('f.to_user_id','f.status'))
-            //     ->where('id','!=',Auth::user()->id)
-            //     ->orderBy('u.name')
-            //     ->select('u.icon','u.name','u.id','u.profile','f.status')
-            //     ->get();
 
             return Response::json($users);
 
@@ -79,7 +71,7 @@ class AddFriendController extends Controller
             if($to_request->count() ==1){
 
                 $r_str=$to_request[0]->room_id;
-                $status=STATUSCODE[3];
+                $status=config('const.Request.FRIEND_STATUS.friend');
 
                 //相手側のstatusを更新
                 FriendList::where('room_id',$r_str)
@@ -93,7 +85,7 @@ class AddFriendController extends Controller
                     $r_str .= $str[rand(0, count($str) - 1)];
                 }
 
-                $status=STATUSCODE[2];
+                $status=config('const.Request.FRIEND_STATUS.success');
             }
 
             $friendList = FriendList::create([
@@ -103,15 +95,18 @@ class AddFriendController extends Controller
                 'status'=>$status
 
             ]);
-
+            // Mail::to('test@example.com')
+            // ->send(new PushNotification());
             DB::commit();
-
             return($friendList->status);
+
+
+
 
         }catch(\Exception $e){
 
             DB::rollback();
-            return(STATUSCODE[4]);
+            return(config('const.Request.FRIEND_STATUS.failed'));
 
         }
     }

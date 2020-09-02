@@ -3,11 +3,11 @@
     height: 100%!important;
     z-index: 1500!important;
     padding: 0!important;
-}
-.modal2-area{
-    .rodal,.rodal-dialog{
 
-        overflow-y: scroll;
+}
+.flex-area{
+    .rodal-dialog{
+        align-items: center;
     }
 }
 .rodal-door-enter,.rodal-slideUp-enter{
@@ -15,4 +15,14 @@
 }
 .rodal-door-leave,.rodal-slideUp-leave.rodal-fade-leave{
     animation-duration: 1000ms!important;
+}
+
+.rodal-slideRight-enter{
+    animation-duration: 2000ms!important;
+}
+.rodal-slideRight-leave{
+    animation-duration: 2000ms!important;
+}
+.rodal-close{
+    z-index: 100;
 }

@@ -1,82 +1,113 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useContext,useState,useEffect } from 'react';
 import {PageHeaderTitle as HeaderTitle,PageHeaderSubTitle as HeaderSubTitle} from '../Common/PageHeader';
-import {SwipeToSlide} from '../Common/SwipeList'
-import {AddFriend} from './AddFriend/AddFriend'
-import {Tweet} from './Tweet/Tweet'
+import Slider from "react-slick";
+import ImageList from'../Common/ImageList';
+import {AddGroup} from './AddGroup/AddGroup';
+import {AddFriend} from './AddFriend/AddFriend';
+import {Tweet} from './Tweet/Tweet';
+import {Option} from './Option/Option';
+import {Sequrity} from './Sequrity/Sequrity';
+import {Admin} from './Admin/Admin';
 import Rodal from 'rodal';
+import {Store,Provider} from '../components/store'
 
 
-const list =[
-    {icon:'/img/Tweet.png',name:'名言をタイムラインに投稿します',id:'menu1'},
-    {icon:'/img/AddGroup.png',name:'トークグループを作成します',id:'menu2'},
-    {icon:'/img/AddFriend.png',name:'友達申請メールを送ります',id:'menu3'},
-    {icon:'/img/Option.png',name:'ユーザ情報を編集します',id:'menu4'},
-    {icon:'/img/Security.png',name:'ログイン情報を編集します',id:'menu5'}
-]
-const columnCnt = 3
 
-export class MypageIndex extends Component {
+export const MypageIndex = () => {
 
-    constructor(props){
-        super(props);
-        this.openModal=this.openModal.bind(this);
-        this.state={
-            openDom:"",
-            visible:false
-        };
-        this.closeModal = this.closeModal.bind(this);
-        this.handleTouchMove = this.handleTouchMove.bind(this);
-    }
-    openModal(e){
+    const {state, dispatch} = useContext(Store)　//store参照
+    const[view,setView]=useState(false) //各種モーダル画面表示フラグ
+    const[openDom,setDom]=useState("") //各種モーダル画面DOM
+    const admin ="administrator";
+    //メニューリスト
+    const [list,setList] =useState([
+        {icon:'/img/Tweet.png',name:'名言をタイムラインに投稿します',id:'menu1'},
+        {icon:'/img/AddGroup.png',name:'トークグループを作成します',id:'menu2'},
+        {icon:'/img/AddFriend.png',name:'友達申請メールを送ります',id:'menu3'},
+        {icon:'/img/Option.png',name:'ユーザ情報を編集します',id:'menu4'},
+        {icon:'/img/Security.png',name:'ログイン情報を編集します',id:'menu5'}
+    ]);
+
+    useEffect(() => {
+
+        if(state.intervalGetData.me[0].admin == admin){
+
+            var newList = list.concat({icon:'/img/Admin.png',name:'管理者画面を表示します',id:'menu6'});
+            setList(newList);
+        }
+
+    },[])
+    //モーダル表示
+    function openModal(e){
         const id = e.currentTarget.id;
 
         if(id=="menu1"){
-            this.setState({openDom:<Tweet/>})
+            setDom(<Tweet/>)
         }else if(id=="menu2"){
-            this.setState({openDom:<AddFriend/>})
+            setDom(<AddGroup/>)
         }else if(id=="menu3"){
-            this.setState({openDom:<AddFriend/>})
-    
+            setDom(<AddFriend/>)
         }else if(id=="menu4"){
-            this.setState({openDom:<AddFriend/>})
+            setDom(<Option/>)
+        }else if(id=="menu5"){
+            setDom(<Sequrity/>)         
         }else{
-            this.setState({openDom:<AddFriend/>})          
+            setDom(<Admin/>)
         }
-        this.setState({visible: true});
-        console.log(e.currentTarget.id);
+
+        //モーダル表示
+        setView(true);
         document.body.setAttribute('style', 'overflow: hidden;')
-        // document.addEventListener('touchmove', this.handleTouchMove, {passive: false});
-    }  
-    closeModal() {
-        this.setState({visible: false});
-        this.setState({openDom:""}) 
+        document.addEventListener( 'touchmove',scrollOff, false);
+
+    }
+
+    //モーダル非表示
+    function closeModal() {
+        history.replaceState('','','/')
+        setDom("")
+
+        //モーダル非表示
+        setView(false);
         document.body.removeAttribute('style', 'overflow: hidden;')
-        // document.removeEventListener('touchmove', this.handleTouchMove, {passive: false});
+        document.removeEventListener( 'touchmove', scrollOff, false );
     }
-    handleTouchMove(event) {
-        event.preventDefault();
+
+    var scrollOff = function( e ){
+        e.preventDefault();
     }
-    render(){
+    return (
+        <div className="mypage-area h-100 mt-5" name="/Mypage">
+            {/* ヘッダー */}
+            <HeaderTitle title="MyPage"/>
+            <br></br>
+            <HeaderSubTitle title="幸せとは自分で掴み取るものさ"/>
 
-        return (
-            <div className="mypage-area h-100 mt-5" name="/Mypage">
-                <HeaderTitle title="MyPage"/>
-                <br></br>
-                <HeaderSubTitle title="幸せとは自分で掴み取るものさ"/>
-                <SwipeToSlide list={list} show={columnCnt} open={this.openModal} base64={false}/>
-                <hr></hr>
-    
-
-                <Rodal 
-                    visible={this.state.visible}
-                    onClose={this.closeModal}
-                    animation="door"
-                    className={`modal-area ${this.state.openDom}`}
-                    >
-                    {this.state.openDom}
-                </Rodal>
+            {/* 各リスト */}
+            <div className="list-container">
+                <Slider {...state.swipeSettingMyPage}>
+                    {list.map((li,index)=>
+                        <ImageList
+                            listElement={li}
+                            menu='MyPage'
+                            key={index}
+                            index={index}
+                            onClick={openModal}
+                        />
+                    )}
+                </Slider>
             </div>
-        );
-    }
+            <hr></hr>
+
+            {/* モーダル画面 */}
+            <Rodal 
+                visible={view}
+                onClose={closeModal}
+                animation="door"
+                className="modal-area"
+                >
+                {openDom}
+            </Rodal>
+        </div>
+    );
 }

@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Intervention\Image\Facades\Image;
+use App\Http\Traits\EditImage;
+use Illuminate\Support\Facades\DB;
+
 class RegisterController extends Controller
 {
     /*
@@ -22,7 +25,7 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
-
+    use EditImage;
     /**
      * Where to redirect users after registration.
      *
@@ -63,19 +66,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $imagefile=$data['image'];
-        $image=$imagefile->get();
-        if(empty($image)){
-            $image =null;
-        }else{
-            $image = base64_encode(Image::make($image)->stream('jpg', 50));          
-        }
+
+        $randomIcon =DB::table('icon_lists')
+                    ->inRandomOrder()
+                    ->select('icon')
+                    ->first();
 
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'icon'=>$image
+            'icon'=>$randomIcon->icon,
+            'admin'=>'guest'
         ]);
     }
 }

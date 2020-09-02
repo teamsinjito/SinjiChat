@@ -38,7 +38,7 @@ $alpha: 0.9;
     background-color: rgba($color:$white, $alpha: 0.9);
 }
 .gray_touka{
-    background-color: rgba($color:$gray, $alpha: 0.5);
+    background-color: rgba($color:$indigo, $alpha: 0.5);
 }
 
 // Fonts
@@ -54,12 +54,12 @@ $alpha: 0.9;
 
 // Font Size
 .txt_XL{
-    @include pc{font-size: 41px;} //元80px
+    @include pc{font-size: 41px;} 
     @include pad{font-size: 60px;}
-    @include phone{font-size: 30px;} //元40px
+    @include phone{font-size: 30px;} 
 }
 .txt_L{
-    @include pc{font-size: 22px;} //元30px
+    @include pc{font-size: 22px;} 
     @include pad{font-size: 25px;}
     @include phone{font-size: 20px;}
 }
@@ -69,14 +69,14 @@ $alpha: 0.9;
     @include phone{font-size: 16px;}
 }
 .txt_S{
-    @include pc{font-size: 20px;} //元23px
+    @include pc{font-size: 20px;} 
     @include pad{font-size: 18px;}
     @include phone{font-size: 14px;}
 }
 .txt_XS{
-    @include pc{font-size: 16px;} //元20px
+    @include pc{font-size: 16px;} 
     @include pad{font-size: 15px;}
-    @include phone{font-size: 12px;} //元14px
+    @include phone{font-size: 12px;} 
 }
 .txt_XXS{
     @include pc{font-size: 12px;}
@@ -84,13 +84,19 @@ $alpha: 0.9;
     @include phone{font-size: 8px;}
 }
 .title_w{
-    @include pc{font-size: 75px;} //元100px
+    @include pc{font-size: 75px;} 
     @include pad{font-size: 80px;}
     @include phone{font-size: 40px;}
 }
 .title_B{
-    @include pc{font-size: 50px;} //元70px
+    @include pc{font-size: 50px;} 
     @include pad{font-size: 70px;}
     @include phone{font-size: 50px;}
 }
 
+a{
+    color: $black;
+    &:hover{
+        color:$black;
+    }
+}

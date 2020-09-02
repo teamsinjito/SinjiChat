@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\TimeLine;
-use Intervention\Image\Facades\Image;
-const STATUSCODE=array(0,1,2,3); 
-//0:呟く 1:呟き中 2:呟き済 3:呟き失敗
+use App\Http\Traits\EditImage;
 
 class TimeLineController extends Controller
 {
+    use EditImage;
+
     //これでAuthのデータを引っ張って来れる？
     public function __construct()
     {
@@ -22,42 +22,76 @@ class TimeLineController extends Controller
     public function tweetInsert(Request $request)
     {
         try{
-        //intervention/imageで画像リサイズ
-        $image = Image::make($request->image);
-        $image->resize(368,554);
-        $image->stream('jpg');
+        // トランザクション開始
+        DB::beginTransaction();
+        
 
-        //return(STATUSCODE[2]);
-        return("data:image/jpeg;base64,".base64_encode($image));
+            //リサイズ処理呼び出し
+            $image=$this->ResizeImage($request->image);
+
+            //DB登録
+            $time_lines = TimeLine::create([
+                'user_id'=>Auth::user()->id,
+                'message'=>$request->message,
+                'image'=>$image
+            ]);
+            
+            //コミット
+            DB::commit();
+
+            
+        }catch(\Exception $e){
+            //エラー時ロールバック
+            DB::rollback();
+            
+        }
+    }
+
+    public function getTweetData()
+    {
+        try{
+            // 最新データを10件取得
+            $timeLineData = DB::table('time_lines as t')
+                        ->join('users as u',function($join){
+                            $join->on('u.id','=','t.user_id');
+                        })
+                        ->select('t.id','u.name','t.message','t.image')
+                        ->orderBy('t.id', 'DESC')
+                        ->take(10)
+                        ->get();
+                        
+            return Response::json($timeLineData);
+
+
         }
         catch(\Exception $e){
-            var_dump($e->messege);
-        }
 
-        //トランザクション開始
-        // DB::beginTransaction();
-        
-        // try{
-            
-        //     //DB登録
-        //     $time_lines = TimeLine::create([
-        //         'user_id'=>Auth::user()->id,
-        //         'message'=>$request->message,
-        //         'image'=>"data:image/jpeg;base64,".base64_encode($image)
-        //     ]);
-            
-        //     //コミット
-        //     DB::commit();
-            
-        //     //ボタン表示変更用コード返却
-        //     return(STATUSCODE[2]);
-            
-        // }catch(\Exception $e){
-        //     //エラー時ロールバック
-        //     DB::rollback();
-            
-        //     //ボタン表示変更用コード返却
-        //     return(STATUSCODE[3]);
-        // }
+            return($e);
+
+        }
+    }
+    public function getOldTweetData(Request $request)
+    {
+        try{
+            // 最新データを10件取得
+            $timeLineData = DB::table('time_lines as t')
+                        ->join('users as u',function($join){
+                            $join->on('u.id','=','t.user_id');
+                        })
+                        ->where('t.id','<',$request->id)
+                        ->select('t.id','u.name','t.message','t.image')
+                        ->orderBy('t.id', 'DESC')
+                        ->take(10)
+                        ->get();
+                        
+            return Response::json($timeLineData);
+
+
+        }
+        catch(\Exception $e){
+
+            return($e);
+
+        }
     }
 }

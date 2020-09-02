@@ -1,0 +1,11 @@
+.loading-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    em{
+        font-family: 'myfont';
+        color: $black;
+    }
+}
