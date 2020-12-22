@@ -7,7 +7,7 @@ http://sinjichat.herokuapp.com/
 PHP7.4,HTML5,SCSS,JavaScript
 
 フレームワーク<br>
-Laravel 5.8
+Laravel 5.8 <br>
 React
 
 データベース<br>
