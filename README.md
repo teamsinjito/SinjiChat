@@ -3,7 +3,7 @@
 http://sinjichat.herokuapp.com/
 
 ======================================
-言語<br>
+<br>言語<br>
 PHP,HTML5,CSS,JavaScript
 
 フレームワーク<br>
@@ -12,4 +12,5 @@ React
 
 データベース<br>
 PostgreSQL
+
 ======================================
