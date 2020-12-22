@@ -3,7 +3,7 @@
 http://sinjichat.herokuapp.com/
 
 ログイン<br>
-E-mail:test@email.com
+E-mail:test@email.com <br>
 pass:test12345
 
 ======================================
