@@ -1,2 +1,3 @@
 # SinjiChat
-チャットアプリhttp://sinjichat.herokuapp.com/
+チャットアプリ
+http://sinjichat.herokuapp.com/
