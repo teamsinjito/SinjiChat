@@ -4,10 +4,10 @@ http://sinjichat.herokuapp.com/
 
 ======================================
 <br>言語<br>
-PHP,HTML5,CSS,JavaScript
+PHP7.4,HTML5,SCSS,JavaScript
 
 フレームワーク<br>
-Laravel
+Laravel 5.8
 React
 
 データベース<br>
