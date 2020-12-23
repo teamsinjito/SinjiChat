@@ -127,7 +127,7 @@ export const TimeLineIndex = () => {
         <Fragment>
             <div className="timeline-area h-100" name="/TimeLine">                 
                 <HeaderTitle title="TimeLine"/>
-                <HeaderSubTitle title="ハートを動かす名言達があります!"/>
+                <HeaderSubTitle title="ハートを動かす名言達があります!!"/>
                 {value.length > 0 ?
                     <Fragment>
 
