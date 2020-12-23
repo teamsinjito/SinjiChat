@@ -14,7 +14,7 @@ export const Title = () => {
 export const SideBarTitle = () => {
     return (
         <p className="title-black title_B text-center">
-            SinjiChat2
+            SinjiChat
         </p>
     );
 }   

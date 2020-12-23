@@ -21,7 +21,7 @@ export const MypageIndex = () => {
     const admin ="administrator";
     //メニューリスト
     const [list,setList] =useState([
-        {icon:'/img/Tweet.png',name:'名言をタイムラインに投稿します!',id:'menu1'},
+        {icon:'/img/Tweet.png',name:'名言をタイムラインに投稿します',id:'menu1'},
         {icon:'/img/AddGroup.png',name:'トークグループを作成します',id:'menu2'},
         {icon:'/img/AddFriend.png',name:'友達申請メールを送ります',id:'menu3'},
         {icon:'/img/Option.png',name:'ユーザ情報を編集します',id:'menu4'},
