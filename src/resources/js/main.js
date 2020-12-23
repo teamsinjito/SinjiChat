@@ -38,7 +38,7 @@ const MainArea=()=>{
 
             
             
-    },500)
+    },7000)
 
     return (
         <>
