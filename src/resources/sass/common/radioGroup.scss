@@ -5,7 +5,12 @@ radio-group{
         display: none;
     }
 }
-
+.visibleProfile-profile{
+    -ms-overflow-style: none;  /* これを追加 */
+}
+.visibleProfile-profile::-webkit-scrollbar {
+    display:none;
+}
 .visibleProfile-profile,.visibleImage-image{
     @include phone{display: block;}
 }
