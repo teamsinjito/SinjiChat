@@ -357,6 +357,11 @@
                             height: calc( 1.8em * 1 );
                             line-height: 1.8;
                             font-family: 'myfont';
+                            overflow: scroll;
+                            -ms-overflow-style: none;  /* これを追加 */
+                        }
+                        textarea::-webkit-scrollbar {
+                            display: none;
                         }
                     }
                     .txt-send{
