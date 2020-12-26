@@ -1019,6 +1019,15 @@ radio-group input[type=radio] {
   display: none;
 }
 
+.visibleProfile-profile {
+  -ms-overflow-style: none;
+  /* これを追加 */
+}
+
+.visibleProfile-profile::-webkit-scrollbar {
+  display: none;
+}
+
 @media (max-width: 767px) {
   .visibleProfile-profile, .visibleImage-image {
     display: block;
@@ -2091,9 +2100,15 @@ hr {
   height: calc( 1.8em * 1 );
   line-height: 1.8;
   font-family: "myfont";
+  overflow: scroll;
+  -ms-overflow-style: none;
+  /* これを追加 */
 }
 .talk-area-in .chat-area .chat-area-in .chat-under .input-row .txt-input textarea:focus {
   outline: none;
+}
+.talk-area-in .chat-area .chat-area-in .chat-under .input-row .txt-input textarea::-webkit-scrollbar {
+  display: none;
 }
 .talk-area-in .chat-area .chat-area-in .chat-under .input-row .txt-send {
   width: 10%;
